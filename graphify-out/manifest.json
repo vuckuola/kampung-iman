@@ -1,0 +1,86 @@
+{
+  "/home/adm-herm/kampung-iman-webgl/vite.config.ts": {
+    "mtime": 1781356252.1785913,
+    "hash": "195a0bdc6a00cf5fbef276879eff8d7c"
+  },
+  "/home/adm-herm/kampung-iman-webgl/src/main.ts": {
+    "mtime": 1781390419.3058407,
+    "hash": "777a5bcc33621a013623cd4e41dfd574"
+  },
+  "/home/adm-herm/kampung-iman-webgl/src/counter.ts": {
+    "mtime": 1781352900.8184562,
+    "hash": "f901580c2252331130bb4d13c0cd858b"
+  },
+  "/home/adm-herm/kampung-iman-webgl/src/content/lessons.ts": {
+    "mtime": 1781353288.933041,
+    "hash": "b1815e19a2d2c20aaa38203a60b192e0"
+  },
+  "/home/adm-herm/kampung-iman-webgl/README.md": {
+    "mtime": 1781388318.1470294,
+    "hash": "722304df42d212de6201c9e60ecbbae9"
+  },
+  "/home/adm-herm/kampung-iman-webgl/index.html": {
+    "mtime": 1781353168.464755,
+    "hash": "b29d2aef59a2787437bebf21cec07245"
+  },
+  "/home/adm-herm/kampung-iman-webgl/ARCHITECTURE.md": {
+    "mtime": 1781353162.8646023,
+    "hash": "e77338b0e6e7dfcb816a39a0c0cd1fc1"
+  },
+  "/home/adm-herm/kampung-iman-webgl/PHASE_QUALITY_GATES.md": {
+    "mtime": 1781353927.1833913,
+    "hash": "ea3106f3ed82b50dad2dd50e275c5b80"
+  },
+  "/home/adm-herm/kampung-iman-webgl/RELEASE_QA.md": {
+    "mtime": 1781354396.9489942,
+    "hash": "31642f23fa104a877ab220b93ca9f183"
+  },
+  "/home/adm-herm/kampung-iman-webgl/docs/learning-content-summary.md": {
+    "mtime": 1781353012.2354941,
+    "hash": "1a41cf35e306e37b2ebab51744732a30"
+  },
+  "/home/adm-herm/kampung-iman-webgl/docs/UI_UX_REFERENCES.md": {
+    "mtime": 1781389980.7229762,
+    "hash": "25a5e4f4f236106a57429767b29776c8"
+  },
+  "/home/adm-herm/kampung-iman-webgl/docs/product-spec-content-direction.md": {
+    "mtime": 1781352933.050335,
+    "hash": "7fc522b94ebce689ef9a8170152f080d"
+  },
+  "/home/adm-herm/kampung-iman-webgl/docs/texture-pack-notes.md": {
+    "mtime": 1781388678.2202277,
+    "hash": "78232582e3200dd9e9018e687d0a6bc2"
+  },
+  "/home/adm-herm/kampung-iman-webgl/docs/audio-plan.md": {
+    "mtime": 1781389022.363278,
+    "hash": "a94818291eaf8ee653286290cb3b7590"
+  },
+  "/home/adm-herm/kampung-iman-webgl/docs/art-direction.md": {
+    "mtime": 1781353000.0111609,
+    "hash": "2f284fcf58109621b84e80737fdeba8d"
+  },
+  "/home/adm-herm/kampung-iman-webgl/src/assets/hero.png": {
+    "mtime": 1781352900.8174562,
+    "hash": "aead493361b27e7510691c5d7072dfc1"
+  },
+  "/home/adm-herm/kampung-iman-webgl/src/assets/vite.svg": {
+    "mtime": 1781352900.8174562,
+    "hash": "9960a24288958394ac50e57ff638b036"
+  },
+  "/home/adm-herm/kampung-iman-webgl/src/assets/typescript.svg": {
+    "mtime": 1781352900.8174562,
+    "hash": "07f132d2ec35a9f4c17c1b9f19a2aac7"
+  },
+  "/home/adm-herm/kampung-iman-webgl/public/favicon.svg": {
+    "mtime": 1781352900.816456,
+    "hash": "7e840862161341271697daa99a40d76b"
+  },
+  "/home/adm-herm/kampung-iman-webgl/public/icons.svg": {
+    "mtime": 1781352900.8174562,
+    "hash": "3b4fcfcf393eca4d264dca4a4663bc37"
+  },
+  "/home/adm-herm/kampung-iman-webgl/public/assets/kampung-iman-skybox.png": {
+    "mtime": 1781388586.1178408,
+    "hash": "83cb4a0e6f990069438eb6285b36b751"
+  }
+}

@@ -35,17 +35,35 @@ app.innerHTML = `
   <canvas id="game-canvas" aria-label="Kampung Iman WebGL prototype"></canvas>
   <section class="start-screen" id="start-screen">
     <div class="start-panel">
-      <p class="eyebrow">Kampung Iman Adventure</p>
-      <h2>Pilih karakter dan mulai belajar</h2>
-      <label>Nama anak
-        <input id="player-name" maxlength="18" placeholder="contoh: Aisyah" value="Aisyah" />
-      </label>
-      <div class="character-picks">
-        <button class="character-pick selected" data-character="girl">Anak Perempuan Syar'i</button>
-        <button class="character-pick" data-character="boy">Anak Laki-laki Syar'i</button>
+      <div class="start-copy">
+        <p class="eyebrow">Kampung Iman Adventure</p>
+        <h2>Masuk ke desa belajar yang damai</h2>
+        <p class="start-subtitle">Jelajahi Adab, Ilmu, dan Sadaqah lewat aktivitas kecil yang hangat, positif, dan ramah anak.</p>
       </div>
-      <button class="primary" id="start-game">Mulai Jelajah</button>
-      <p class="start-note">Kontrol: keyboard atau joystick touchscreen. Belajar lewat aktivitas, bukan tabrak-tabrakan.</p>
+      <div class="start-grid">
+        <div class="character-preview" id="character-preview" aria-hidden="true">
+          <span class="preview-sun"></span>
+          <span class="preview-path"></span>
+          <span class="preview-kid preview-girl"></span>
+          <span class="preview-label">Calm village mode</span>
+        </div>
+        <div class="start-form-card">
+          <label>Nama anak
+            <input id="player-name" maxlength="18" placeholder="contoh: Aisyah" value="Aisyah" />
+          </label>
+          <div class="character-picks" role="group" aria-label="Pilih karakter">
+            <button class="character-pick selected" data-character="girl" aria-pressed="true"><span>Hijab</span><small>Anak perempuan</small></button>
+            <button class="character-pick" data-character="boy" aria-pressed="false"><span>Kufi</span><small>Anak laki-laki</small></button>
+          </div>
+        </div>
+      </div>
+      <div class="setup-checklist" aria-label="Game setup checklist">
+        <span><i></i> Warm village</span>
+        <span><i></i> Parent-safe quests</span>
+        <span><i></i> Optional sound</span>
+      </div>
+      <button class="primary start-primary" id="start-game">Mulai Jelajah</button>
+      <p class="start-note">Keyboard atau joystick touchscreen. Semua feedback lembut, tidak menghukum.</p>
     </div>
   </section>
   <div class="hud">
@@ -55,19 +73,20 @@ app.innerHTML = `
     </div>
     <div class="stats">
       <span>Player <strong id="player-label">Aisyah</strong></span>
+      <span>Zone <strong id="current-zone">Village</strong></span>
       <span>Score <strong id="score">0</strong></span>
-      <span>Quests <strong id="orbs">0/12</strong></span>
+      <span>Lessons <strong id="orbs">0/12</strong></span>
     </div>
   </div>
   <button class="audio-toggle" id="audio-toggle">Sound Off</button>
   <div class="controls">WASD / Arrow keys move · Space slows · R resets · Tap activities for quests</div>
-  <div class="touch-controls" aria-label="Touch driving controls">
+  <div class="touch-controls" aria-label="Touch movement controls">
     <div class="joystick" id="joystick" aria-label="Drag to steer and drive">
       <div class="joystick-knob" id="joystick-knob"></div>
     </div>
     <div class="touch-actions">
       <button id="touch-brake" aria-label="Brake">Brake</button>
-      <button id="touch-reset" aria-label="Reset car">Reset</button>
+      <button id="touch-reset" aria-label="Reset player">Reset</button>
     </div>
   </div>
   <div class="lesson-card" id="lesson-card">Explore Adab, Ilmu, and Sadaqah zones.</div>
@@ -77,18 +96,22 @@ app.innerHTML = `
       <h2 id="quiz-question"></h2>
       <div id="quiz-choices" class="quiz-choices"></div>
       <p id="quiz-feedback" class="feedback"></p>
+      <p id="quiz-source" class="source-badge"></p>
       <button id="continue-button" class="primary" value="continue" disabled>Continue</button>
     </form>
   </dialog>
   <div class="win-card" id="win-card" hidden>
+    <div class="reward-badge">★</div>
+    <p class="eyebrow">Alhamdulillah</p>
     <h2>Journey Complete</h2>
-    <p>You collected every wisdom orb. Keep learning, practicing adab, and helping others.</p>
+    <p>You completed every learning activity. Keep practicing adab, seeking knowledge, and helping others.</p>
     <button id="play-again">Play again</button>
   </div>
 `
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas')!
 const scoreElement = document.querySelector<HTMLElement>('#score')!
+const currentZoneElement = document.querySelector<HTMLElement>('#current-zone')!
 const playerLabel = document.querySelector<HTMLElement>('#player-label')!
 const orbsElement = document.querySelector<HTMLElement>('#orbs')!
 const lessonCard = document.querySelector<HTMLElement>('#lesson-card')!
@@ -97,6 +120,7 @@ const quizZone = document.querySelector<HTMLElement>('#quiz-zone')!
 const quizQuestion = document.querySelector<HTMLElement>('#quiz-question')!
 const quizChoices = document.querySelector<HTMLElement>('#quiz-choices')!
 const quizFeedback = document.querySelector<HTMLElement>('#quiz-feedback')!
+const quizSource = document.querySelector<HTMLElement>('#quiz-source')!
 const continueButton = document.querySelector<HTMLButtonElement>('#continue-button')!
 const winCard = document.querySelector<HTMLElement>('#win-card')!
 const playAgainButton = document.querySelector<HTMLButtonElement>('#play-again')!
@@ -267,6 +291,9 @@ const crossRoad = new THREE.Mesh(new THREE.BoxGeometry(36, 0.052, 6), roadMateri
 crossRoad.position.set(0, 0.04, -5)
 crossRoad.receiveShadow = true
 scene.add(crossRoad)
+addSoftPath(-7.6, -5, 12, 3.2, 0.08)
+addSoftPath(0, 8.2, 3.3, 14, -0.05)
+addSoftPath(7.8, -5, 12, 3.2, -0.08)
 
 for (let z = -24; z <= 24; z += 4) {
   const stripe = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.065, 1.7), new THREE.MeshStandardMaterial({ color: 0xfff4d6, roughness: 0.7 }))
@@ -537,22 +564,217 @@ function addSmallHouse(x: number, z: number, color: number) {
   addCollider(new THREE.Vector3(x, 0, z), 1.9, 'house')
 }
 
+
+function addBench(x: number, z: number, rotation = 0) {
+  const group = new THREE.Group()
+  const wood = new THREE.MeshStandardMaterial({ color: 0x9b623a, map: repeated(woodTexture, 1, 1), roughness: 0.78 })
+  const seat = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.18, 0.42), wood)
+  seat.position.y = 0.48
+  const back = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.16, 0.36), wood)
+  back.position.set(0, 0.82, -0.28)
+  back.rotation.x = -0.16
+  ;[-0.55, 0.55].forEach((lx) => {
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.07, 0.48, 8), wood)
+    leg.position.set(lx, 0.24, 0.12)
+    group.add(leg)
+  })
+  group.add(seat, back)
+  group.position.set(x, 0, z)
+  group.rotation.y = rotation
+  group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  scene.add(group)
+  addCollider(new THREE.Vector3(x, 0, z), 0.9, 'bench')
+}
+
+function addSignpost(x: number, z: number, text: string, color: number, rotation = 0) {
+  const group = new THREE.Group()
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 1.45, 8), new THREE.MeshStandardMaterial({ color: 0x8b5a2b, map: repeated(woodTexture, 1, 2), roughness: 0.82 }))
+  post.position.y = 0.72
+  const board = new THREE.Mesh(new THREE.BoxGeometry(1.45, 0.5, 0.12), new THREE.MeshStandardMaterial({ color: 0xfffbdf, roughness: 0.66 }))
+  board.position.y = 1.34
+  const label = makeLabelSprite(text, `#${color.toString(16).padStart(6, '0')}`)
+  label.position.set(0, 1.78, 0.08)
+  label.scale.set(1.65, 0.42, 1)
+  group.add(post, board, label)
+  group.position.set(x, 0, z)
+  group.rotation.y = rotation
+  group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  scene.add(group)
+  addCollider(new THREE.Vector3(x, 0, z), 0.42, 'signpost')
+}
+
+function addFlowerBed(x: number, z: number, color = 0xffd166) {
+  const group = new THREE.Group()
+  const soil = new THREE.Mesh(new THREE.CylinderGeometry(0.86, 0.98, 0.18, 18), new THREE.MeshStandardMaterial({ color: 0x8b5a2b, roughness: 0.84 }))
+  soil.position.y = 0.1
+  group.add(soil)
+  for (let i = 0; i < 7; i += 1) {
+    const angle = (i / 7) * Math.PI * 2
+    const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.025, 0.38, 6), new THREE.MeshStandardMaterial({ color: 0x2f8f46, roughness: 0.8 }))
+    stem.position.set(Math.cos(angle) * 0.42, 0.32, Math.sin(angle) * 0.32)
+    const bloom = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 6), new THREE.MeshStandardMaterial({ color: i % 2 ? color : 0xf2a0b8, roughness: 0.7 }))
+    bloom.position.set(stem.position.x, 0.56, stem.position.z)
+    group.add(stem, bloom)
+  }
+  group.position.set(x, 0, z)
+  group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  scene.add(group)
+  addCollider(new THREE.Vector3(x, 0, z), 0.85, 'flower bed')
+}
+
+function addChalkboard(x: number, z: number, rotation = 0) {
+  const group = new THREE.Group()
+  const frame = new THREE.Mesh(new THREE.BoxGeometry(1.9, 1.15, 0.12), new THREE.MeshStandardMaterial({ color: 0x8b5a2b, map: repeated(woodTexture, 1, 1), roughness: 0.8 }))
+  frame.position.y = 1.15
+  const board = new THREE.Mesh(new THREE.BoxGeometry(1.68, 0.9, 0.13), new THREE.MeshStandardMaterial({ color: 0x14523e, roughness: 0.92 }))
+  board.position.set(0, 1.16, 0.02)
+  ;[-0.7, 0.7].forEach((lx) => {
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.06, 0.9, 8), new THREE.MeshStandardMaterial({ color: 0x8b5a2b, roughness: 0.8 }))
+    leg.position.set(lx, 0.42, 0)
+    group.add(leg)
+  })
+  group.add(frame, board)
+  group.position.set(x, 0, z)
+  group.rotation.y = rotation
+  group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  scene.add(group)
+  addCollider(new THREE.Vector3(x, 0, z), 1.05, 'chalkboard')
+}
+
+function addMarketStall(x: number, z: number, rotation = 0) {
+  const group = new THREE.Group()
+  const wood = new THREE.MeshStandardMaterial({ color: 0x9b623a, map: repeated(woodTexture, 1, 1), roughness: 0.8 })
+  const counter = new THREE.Mesh(new THREE.BoxGeometry(2.15, 0.62, 0.9), wood)
+  counter.position.y = 0.42
+  const canopy = new THREE.Mesh(new THREE.BoxGeometry(2.55, 0.18, 1.28), new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.72 }))
+  canopy.position.y = 1.72
+  ;[-0.9, 0.9].forEach((lx) => {
+    const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.055, 1.5, 8), wood)
+    pole.position.set(lx, 0.95, -0.32)
+    group.add(pole)
+  })
+  for (let i = 0; i < 4; i += 1) {
+    const fruit = new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 8), new THREE.MeshStandardMaterial({ color: i % 2 ? 0xf0a629 : 0x8fca6b, roughness: 0.65 }))
+    fruit.position.set(-0.62 + i * 0.42, 0.86, 0.03)
+    group.add(fruit)
+  }
+  group.add(counter, canopy)
+  group.position.set(x, 0, z)
+  group.rotation.y = rotation
+  group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  scene.add(group)
+  addCollider(new THREE.Vector3(x, 0, z), 1.35, 'market stall')
+}
+
+function addDonationBox(x: number, z: number) {
+  const group = new THREE.Group()
+  const box = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.62, 0.68), new THREE.MeshStandardMaterial({ color: 0x2f7d5c, roughness: 0.72 }))
+  box.position.y = 0.36
+  const lid = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.1, 0.76), new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.64 }))
+  lid.position.y = 0.72
+  group.add(box, lid)
+  group.position.set(x, 0, z)
+  group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  scene.add(group)
+  addCollider(new THREE.Vector3(x, 0, z), 0.72, 'donation box')
+}
+
+function addWaterStand(x: number, z: number) {
+  const stand = new THREE.Group()
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.42, 0.8, 14), new THREE.MeshStandardMaterial({ color: 0x8ecae6, roughness: 0.46 }))
+  base.position.y = 0.44
+  const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.12, 0.28, 12), new THREE.MeshStandardMaterial({ color: 0xfffbdf, roughness: 0.5 }))
+  cup.position.set(0.42, 0.62, 0)
+  stand.add(base, cup)
+  stand.position.set(x, 0, z)
+  stand.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  scene.add(stand)
+  addCollider(new THREE.Vector3(x, 0, z), 0.58, 'water stand')
+}
+
+function addSandalRack(x: number, z: number, rotation = 0) {
+  const group = new THREE.Group()
+  const rack = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.18, 0.48), new THREE.MeshStandardMaterial({ color: 0x8b5a2b, map: repeated(woodTexture, 1, 1), roughness: 0.82 }))
+  rack.position.y = 0.22
+  ;[-0.32, 0.28].forEach((sx) => {
+    const sandal = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.06, 0.46), new THREE.MeshStandardMaterial({ color: 0x5b3b2e, roughness: 0.76 }))
+    sandal.position.set(sx, 0.37, 0.02)
+    group.add(sandal)
+  })
+  group.add(rack)
+  group.position.set(x, 0, z)
+  group.rotation.y = rotation
+  group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  scene.add(group)
+  addCollider(new THREE.Vector3(x, 0, z), 0.72, 'sandal rack')
+}
+
+function addBroom(x: number, z: number, rotation = 0) {
+  const group = new THREE.Group()
+  const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.035, 1.2, 8), new THREE.MeshStandardMaterial({ color: 0x8b5a2b, roughness: 0.8 }))
+  handle.position.y = 0.75
+  handle.rotation.z = 0.32
+  const brush = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.42, 8), new THREE.MeshStandardMaterial({ color: 0xd9b06f, roughness: 0.86 }))
+  brush.position.set(0.2, 0.18, 0)
+  brush.rotation.z = 0.32
+  group.add(handle, brush)
+  group.position.set(x, 0, z)
+  group.rotation.y = rotation
+  group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  scene.add(group)
+}
+
+function addSoftPath(x: number, z: number, width: number, depth: number, rotation = 0) {
+  const path = new THREE.Mesh(
+    new THREE.BoxGeometry(width, 0.035, depth),
+    new THREE.MeshStandardMaterial({ color: 0xd9b06f, map: repeated(roadTexture, Math.max(1, width / 5), Math.max(1, depth / 5)), roughness: 0.9 }),
+  )
+  path.position.set(x, 0.075, z)
+  path.rotation.y = rotation
+  path.receiveShadow = true
+  scene.add(path)
+}
+
+function addZoneGroundPatch(position: THREE.Vector3, color: number) {
+  const patch = new THREE.Mesh(
+    new THREE.CylinderGeometry(7.2, 7.8, 0.05, 48),
+    new THREE.MeshStandardMaterial({ color, transparent: true, opacity: 0.18, roughness: 0.86 }),
+  )
+  patch.position.set(position.x, 0.065, position.z)
+  patch.receiveShadow = true
+  scene.add(patch)
+}
+
 function addZoneSetDressing(id: ZoneId, position: THREE.Vector3, color: number) {
+  addZoneGroundPatch(position, color)
   addArchGate(position.x, position.z + 6.3, color, Math.PI)
   addLantern(position.x - 4.6, position.z + 4.4, color)
   addLantern(position.x + 4.6, position.z + 4.4, color)
+  addSignpost(position.x - 3.6, position.z + 5.2, id === 'adab' ? 'Kindness' : id === 'ilmu' ? 'Learn' : 'Help', color, -0.2)
   if (id === 'adab') {
     addFountain(position.x - 5.2, position.z - 0.6)
     addFenceLine(position.x - 7, position.z - 5.6, 8, 1.8, 0xd9b06f)
+    addBench(position.x + 3.6, position.z - 2.6, -0.5)
+    addSandalRack(position.x + 5.1, position.z + 0.2, 0.4)
+    addWaterStand(position.x - 1.9, position.z - 4.3)
+    addBroom(position.x + 1.7, position.z + 3.1, 0.8)
+    addFlowerBed(position.x - 3.0, position.z + 2.8, 0xf2a0b8)
   }
   if (id === 'ilmu') {
     addBookStack(position.x - 5.5, position.z + 0.4)
     addBookStack(position.x + 5.1, position.z - 1.8)
     addBookStack(position.x + 3.2, position.z + 4.6)
+    addChalkboard(position.x - 3.9, position.z - 3.6, 0.25)
+    addBench(position.x + 4.5, position.z + 2.3, 0.45)
+    addFlowerBed(position.x - 0.5, position.z - 5.0, 0x8ecae6)
   }
   if (id === 'sadaqah') {
     ;[-5.4, -3.6, 3.6, 5.4].forEach((dx) => addPlanter(position.x + dx, position.z + 1.2))
     addFenceLine(position.x - 7.2, position.z - 5.6, 9, 1.8, 0x9b623a)
+    addMarketStall(position.x - 4.6, position.z - 2.4, 0.35)
+    addDonationBox(position.x + 3.8, position.z - 3.6)
+    addWaterStand(position.x + 5.5, position.z + 3.5)
+    addFlowerBed(position.x + 0.5, position.z + 4.6, 0xffd166)
   }
 }
 
@@ -585,16 +807,17 @@ function addBuilding(position: THREE.Vector3, color: number, label: string) {
   group.position.copy(position)
   group.userData.label = label
   scene.add(group)
+  addCollider(position, 4.05, label)
 }
 
 
-function createQuestScene(zone: ZoneId, quiz: Quiz, position: THREE.Vector3, index: number) {
+function createQuestScene(zone: ZoneId, quiz: Quiz, position: THREE.Vector3) {
   const color = zones[zone].color
   const group = new THREE.Group()
   group.position.copy(position)
   const base = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.9, 1.05, 0.18, 24),
-    new THREE.MeshStandardMaterial({ color, transparent: true, opacity: 0.82, roughness: 0.65 }),
+    new THREE.CylinderGeometry(0.98, 1.12, 0.18, 28),
+    new THREE.MeshStandardMaterial({ color, transparent: true, opacity: 0.78, emissive: color, emissiveIntensity: 0.12, roughness: 0.65 }),
   )
   base.position.y = 0.12
   const npcBody = new THREE.Mesh(
@@ -620,10 +843,10 @@ function createQuestScene(zone: ZoneId, quiz: Quiz, position: THREE.Vector3, ind
     salam.position.set(0.34, 0.82, 0)
     activity.add(salam)
   }
-  const halo = new THREE.Mesh(new THREE.TorusGeometry(1.08, 0.025, 8, 48), new THREE.MeshStandardMaterial({ color: 0xfff3a3, emissive: color, emissiveIntensity: 0.8 }))
+  const halo = new THREE.Mesh(new THREE.TorusGeometry(1.12, 0.035, 8, 48), new THREE.MeshStandardMaterial({ color: 0xfff3a3, emissive: color, emissiveIntensity: 0.55 }))
   halo.rotation.x = Math.PI / 2
   halo.position.y = 0.18
-  const label = makeLabelSprite(index % 2 === 0 ? 'Quest' : 'Activity', `#${color.toString(16).padStart(6, '0')}`)
+  const label = makeLabelSprite(zone === 'adab' ? 'Kindness' : zone === 'ilmu' ? 'Learn' : 'Help', `#${color.toString(16).padStart(6, '0')}`)
   label.position.set(0, 1.95, 0)
   label.scale.set(2.4, 0.62, 1)
   group.add(base, npcBody, npcHead, activity, halo, label)
@@ -647,7 +870,7 @@ Object.entries(zones).forEach(([id, zone]) => {
   quizzes[id as ZoneId].forEach((quiz, index, zoneQuizzes) => {
     const angle = (index / zoneQuizzes.length) * Math.PI * 2 + (id === 'ilmu' ? Math.PI / 2 : 0)
     const radius = id === 'ilmu' ? 4.4 : 3.7
-    const activity = createQuestScene(id as ZoneId, quiz, new THREE.Vector3(zone.position.x + Math.cos(angle) * radius, 0, zone.position.z + Math.sin(angle) * radius), index)
+    const activity = createQuestScene(id as ZoneId, quiz, new THREE.Vector3(zone.position.x + Math.cos(angle) * radius, 0, zone.position.z + Math.sin(angle) * radius))
     scene.add(activity)
     knowledgeOrbs.push({ mesh: activity, zone: id as ZoneId, quiz, collected: false })
   })
@@ -656,7 +879,12 @@ Object.entries(zones).forEach(([id, zone]) => {
 addRamp(-5, -18, 0.35)
 addRamp(7, 18, -0.25)
 addRamp(18, 4, 1.35)
-;[[-22, -20, 0xd9b06f], [-18, 14, 0xe9a66b], [20, -18, 0xffd166], [23, 15, 0xc1d9a3], [-25, 4, 0xf2c2a0], [25, -2, 0x9bc6d8]].forEach(([x, z, color]) => addSmallHouse(x, z, color))
+;[[-22, -20, 0xd9b06f], [-18, 14, 0xe9a66b], [20, -18, 0xffd166], [23, 15, 0xc1d9a3], [-25, 4, 0xf2c2a0], [25, -2, 0x9bc6d8], [-12, -24, 0xc9d7b4], [12, 23, 0xf4cfa0]].forEach(([x, z, color]) => addSmallHouse(x, z, color))
+addSignpost(0, -11, 'Village Path', 0x2f7d5c, 0)
+addBench(-3.8, -9.4, 0.35)
+addBench(4.1, -9.2, -0.35)
+addFlowerBed(-6.6, -8.6, 0xf2a0b8)
+addFlowerBed(6.8, -8.4, 0xffd166)
 
 for (let i = 0; i < 42; i += 1) {
   const x = (Math.random() - 0.5) * 62
@@ -675,6 +903,7 @@ let finished = false
 let audioContext: AudioContext | null = null
 let songTimer = 0
 const clock = new THREE.Clock()
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 window.addEventListener('keydown', (event) => {
   keys.add(event.key.toLowerCase())
@@ -781,6 +1010,7 @@ function updateVehicle(dt: number) {
   rightArm.rotation.x = leftLeg.rotation.x * 0.55
 
   const currentZone = Object.values(zones).find((zone) => car.position.distanceTo(zone.position) < 6.5)
+  currentZoneElement.textContent = currentZone ? currentZone.title.replace(' Courtyard', '').replace(' Library', '').replace(' Garden', '') : 'Village'
   lessonCard.textContent = currentZone ? `${currentZone.title}: ${zoneLessons[(Object.keys(zones) as ZoneId[]).find((id) => zones[id] === currentZone)!]}` : 'Walk to activity circles. Each scene opens a short quest and a wisdom point.'
 }
 
@@ -807,6 +1037,7 @@ function openQuiz(orb: KnowledgeOrb) {
   quizZone.textContent = `${zones[orb.zone].title} · Activity with ${playerName}`
   quizQuestion.textContent = orb.quiz.question
   quizFeedback.textContent = ''
+  quizSource.textContent = `Source: ${orb.quiz.source}`
   continueButton.disabled = true
   quizChoices.innerHTML = ''
   orb.quiz.choices.forEach((choice, index) => {
@@ -816,7 +1047,9 @@ function openQuiz(orb: KnowledgeOrb) {
     button.addEventListener('click', () => answerQuiz(index))
     quizChoices.append(button)
   })
+  quizModal.classList.remove('answered-correct', 'answered-wrong')
   quizModal.showModal()
+  ;(quizChoices.querySelector('button') as HTMLButtonElement | null)?.focus()
 }
 
 function answerQuiz(index: number) {
@@ -829,13 +1062,18 @@ function answerQuiz(index: number) {
   burstAt(activeOrb.mesh.position, zones[activeOrb.zone].color)
   playPickupSound()
   quizFeedback.textContent = `${correct ? 'Correct!' : 'Good try.'} ${activeOrb.quiz.explanation}`
-  quizFeedback.className = correct ? 'feedback correct' : 'feedback'
+  quizFeedback.className = correct ? 'feedback correct' : 'feedback wrong'
+  quizModal.classList.toggle('answered-correct', correct)
+  quizModal.classList.toggle('answered-wrong', !correct)
   Array.from(quizChoices.children).forEach((child, childIndex) => {
     const button = child as HTMLButtonElement
     button.disabled = true
     if (childIndex === activeOrb?.quiz.answer) button.classList.add('right-answer')
   })
   scoreElement.textContent = String(score)
+  scoreElement.classList.remove('score-bump')
+  void scoreElement.offsetWidth
+  scoreElement.classList.add('score-bump')
   orbsElement.textContent = `${collected}/${knowledgeOrbs.length}`
   if (collected >= knowledgeOrbs.length) {
     finished = true
@@ -852,8 +1090,10 @@ continueButton.addEventListener('click', () => {
 
 document.querySelectorAll<HTMLButtonElement>('.character-pick').forEach((button) => {
   button.addEventListener('click', () => {
-    document.querySelectorAll<HTMLButtonElement>('.character-pick').forEach((item) => item.classList.remove('selected'))
+    document.querySelectorAll<HTMLButtonElement>('.character-pick').forEach((item) => { item.classList.remove('selected'); item.setAttribute('aria-pressed', 'false') })
     button.classList.add('selected')
+    button.setAttribute('aria-pressed', 'true')
+    document.querySelector('#character-preview')?.classList.toggle('boy-selected', button.dataset.character === 'boy')
     applyCharacterChoice((button.dataset.character as CharacterChoice) || 'girl')
   })
 })
@@ -931,10 +1171,12 @@ function animate() {
   updateAmbientSong(dt)
   knowledgeOrbs.forEach((orb, index) => {
     if (orb.collected) return
-    orb.mesh.rotation.y += dt * 0.8
-    const pulse = 1 + Math.sin(clock.elapsedTime * 4 + index) * 0.08
-    orb.mesh.scale.setScalar(pulse)
-    orb.mesh.position.y = 1.1 + Math.sin(clock.elapsedTime * 2 + index) * 0.18
+    if (!reducedMotion) orb.mesh.rotation.y += dt * 0.45
+    const distance = orb.mesh.position.distanceTo(car.position)
+    const near = distance < 5
+    const pulse = reducedMotion ? 1 : 1 + Math.sin(clock.elapsedTime * (near ? 5 : 2.5) + index) * (near ? 0.11 : 0.04)
+    orb.mesh.scale.setScalar(near ? pulse * 1.08 : pulse)
+    orb.mesh.position.y = reducedMotion ? 0.8 : 0.8 + Math.sin(clock.elapsedTime * 1.8 + index) * 0.10
   })
   pickupParticles.forEach((particle, index) => {
     particle.life -= dt
