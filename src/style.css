@@ -203,29 +203,81 @@ button {
 
 .touch-controls {
   position: fixed;
-  left: 20px;
+  left: 18px;
   bottom: 76px;
   z-index: 3;
   display: none;
-  grid-template-columns: repeat(3, 52px);
-  grid-template-rows: repeat(2, 52px);
-  gap: 8px;
+  align-items: flex-end;
+  gap: 16px;
+  user-select: none;
+  touch-action: none;
 }
 
-.touch-controls button {
+.joystick {
+  position: relative;
+  width: 138px;
+  height: 138px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 209, 102, 0.22) 0 28%, transparent 29%),
+    rgba(20, 82, 62, 0.55);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24), inset 0 0 24px rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+}
+
+.joystick::before,
+.joystick::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 247, 214, 0.42);
+}
+
+.joystick::before {
+  left: 50%;
+  top: 18px;
+  bottom: 18px;
+  width: 2px;
+}
+
+.joystick::after {
+  top: 50%;
+  left: 18px;
+  right: 18px;
+  height: 2px;
+}
+
+.joystick-knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 56px;
+  height: 56px;
+  margin-left: -28px;
+  margin-top: -28px;
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  background: linear-gradient(145deg, #ffd166, #f0a629);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26);
+  transition: transform 80ms ease-out;
+}
+
+.touch-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.touch-actions button {
+  min-width: 82px;
+  min-height: 52px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 18px;
   color: #fff7d6;
-  background: rgba(20, 82, 62, 0.82);
+  background: rgba(20, 82, 62, 0.84);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
   backdrop-filter: blur(12px);
   font-weight: 900;
 }
-
-.touch-controls button:nth-child(1) { grid-column: 2; }
-.touch-controls button:nth-child(2) { grid-column: 1; grid-row: 2; }
-.touch-controls button:nth-child(3) { grid-column: 2; grid-row: 2; }
-.touch-controls button:nth-child(4) { grid-column: 3; grid-row: 2; }
 
 .win-card {
   position: fixed;
@@ -277,7 +329,7 @@ button {
   }
 
   .touch-controls {
-    display: grid;
+    display: flex;
   }
 
   .lesson-card {

@@ -56,7 +56,14 @@ The loop is intentionally forgiving: there is no combat, no harsh failure state,
 
 ### Mobile / touch
 
-The UI is responsive enough to view on mobile-sized screens, but this vertical slice does **not** yet include dedicated on-screen driving controls. For the current go-live slice, keyboard desktop play is the supported path.
+Mobile-sized screens now include a dedicated on-screen driving layout:
+
+- Drag the joystick upward/downward to accelerate/reverse.
+- Drag left/right to steer.
+- Tap **Brake** to slow down.
+- Tap **Reset** if the car gets stuck.
+
+Desktop keyboard remains the most-tested path, but the go-live slice now supports direct touchscreen movement.
 
 ## Islamic Safety Constraints
 
