@@ -4,8 +4,8 @@
     "hash": "195a0bdc6a00cf5fbef276879eff8d7c"
   },
   "/home/adm-herm/kampung-iman-webgl/src/main.ts": {
-    "mtime": 1781390419.3058407,
-    "hash": "777a5bcc33621a013623cd4e41dfd574"
+    "mtime": 1781391116.8701062,
+    "hash": "448a99700b9e362d68a8e2ed1609fb12"
   },
   "/home/adm-herm/kampung-iman-webgl/src/counter.ts": {
     "mtime": 1781352900.8184562,
@@ -14,6 +14,14 @@
   "/home/adm-herm/kampung-iman-webgl/src/content/lessons.ts": {
     "mtime": 1781353288.933041,
     "hash": "b1815e19a2d2c20aaa38203a60b192e0"
+  },
+  "/home/adm-herm/kampung-iman-webgl/src/ui/dom.ts": {
+    "mtime": 1781391116.8701062,
+    "hash": "8822e9d7fd4b75e3ed004344740be325"
+  },
+  "/home/adm-herm/kampung-iman-webgl/src/scene/zones.ts": {
+    "mtime": 1781391116.8701062,
+    "hash": "7531919dc5fb6fba5ed4b9f453353e0a"
   },
   "/home/adm-herm/kampung-iman-webgl/README.md": {
     "mtime": 1781388318.1470294,
@@ -46,6 +54,10 @@
   "/home/adm-herm/kampung-iman-webgl/docs/product-spec-content-direction.md": {
     "mtime": 1781352933.050335,
     "hash": "7fc522b94ebce689ef9a8170152f080d"
+  },
+  "/home/adm-herm/kampung-iman-webgl/docs/PRIORITY_1_MODULAR_QA.md": {
+    "mtime": 1781391177.5706663,
+    "hash": "17ada6d34a2b99198189ac38c6a18251"
   },
   "/home/adm-herm/kampung-iman-webgl/docs/texture-pack-notes.md": {
     "mtime": 1781388678.2202277,
