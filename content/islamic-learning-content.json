@@ -1,0 +1,239 @@
+{
+  "metadata": {
+    "title": "Kampung Iman Grounded Learning Pack",
+    "audience": "Children ages 6-10, with parent/teacher guidance",
+    "safetyNotes": [
+      "Use Qur'an references and widely known sahih hadith only.",
+      "Do not depict prophets, angels, sahabah, or any sacred figures.",
+      "Avoid faces on characters or use back-view/silhouette/featureless low-poly villagers.",
+      "Keep all religious content gentle, non-sectarian, and parent-reviewable."
+    ],
+    "createdFor": "WebGL educational game prototype"
+  },
+  "quizQuestions": [
+    {
+      "id": "q01-good-speech",
+      "zone": "village",
+      "prompt": "A friend feels sad. What is a beautiful way to speak?",
+      "choices": [
+        "Use kind words and comfort them",
+        "Laugh at them",
+        "Ignore them",
+        "Say something mean"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Wonderful. The Qur'an teaches us to speak good words to people.",
+      "feedbackIncorrect": "Try again with gentle speech. Kind words help hearts feel safe.",
+      "source": "Qur'an 2:83 — speak good to people"
+    },
+    {
+      "id": "q02-parents",
+      "zone": "home-courtyard",
+      "prompt": "How should we treat our parents or caregivers?",
+      "choices": [
+        "With kindness and respect",
+        "Only when we want a treat",
+        "By shouting",
+        "By refusing every request"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Yes. The Qur'an teaches excellent kindness to parents.",
+      "feedbackIncorrect": "Remember: respect and gentle service are beautiful deeds.",
+      "source": "Qur'an 17:23 — kindness to parents"
+    },
+    {
+      "id": "q03-brotherhood",
+      "zone": "garden",
+      "prompt": "What should you love for others?",
+      "choices": [
+        "The good things you love for yourself",
+        "Only toys for yourself",
+        "Being first every time",
+        "Making others lose"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Great. A believer loves good for others too.",
+      "feedbackIncorrect": "Think about sharing goodness, not only keeping it for yourself.",
+      "source": "Sahih al-Bukhari and Sahih Muslim — love for your brother what you love for yourself"
+    },
+    {
+      "id": "q04-remove-harm",
+      "zone": "village-path",
+      "prompt": "You see a banana peel on the walkway. What can be a charity?",
+      "choices": [
+        "Move it safely so no one slips",
+        "Step over it and leave it",
+        "Put more peels there",
+        "Hide it under a rug"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Excellent. Removing harm from the road is a charity.",
+      "feedbackIncorrect": "Try the helpful choice that protects others from harm.",
+      "source": "Sahih al-Bukhari and Sahih Muslim — removing harmful things from the road is charity"
+    },
+    {
+      "id": "q05-learning-dua",
+      "zone": "library",
+      "prompt": "What short du'a asks Allah for more knowledge?",
+      "choices": [
+        "Rabbi zidni 'ilma",
+        "I know everything already",
+        "No more learning today",
+        "Only games, never books"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Beautiful. It means: My Lord, increase me in knowledge.",
+      "feedbackIncorrect": "Look for the Qur'anic du'a about growing in knowledge.",
+      "source": "Qur'an 20:114 — My Lord, increase me in knowledge"
+    },
+    {
+      "id": "q06-time",
+      "zone": "clock-tower",
+      "prompt": "Surah Al-'Asr reminds us that time is precious. What should we fill it with?",
+      "choices": [
+        "Faith, good deeds, truth, and patience",
+        "Only wasting time",
+        "Teasing others",
+        "Breaking promises"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Yes. Time is a gift, so we use it for good.",
+      "feedbackIncorrect": "Try the answer with faith, good actions, truth, and patience.",
+      "source": "Qur'an 103:1-3 — Surah Al-'Asr"
+    },
+    {
+      "id": "q07-good-word-charity",
+      "zone": "market",
+      "prompt": "A good word can be counted as what?",
+      "choices": [
+        "Charity",
+        "A race",
+        "A secret code",
+        "A mistake"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Yes. A gentle good word can be charity.",
+      "feedbackIncorrect": "Try the answer that turns kindness into a good deed.",
+      "source": "Sahih al-Bukhari and Sahih Muslim — a good word is charity"
+    },
+    {
+      "id": "q08-no-mocking",
+      "zone": "playground",
+      "prompt": "What does the Qur'an teach about making fun of people?",
+      "choices": [
+        "Do not mock or insult others",
+        "Mock people if others laugh",
+        "Give mean nicknames",
+        "Only be kind to best friends"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Correct. Respect keeps the community safe and happy.",
+      "feedbackIncorrect": "Choose the answer that protects people's feelings and honor.",
+      "source": "Qur'an 49:11 — do not ridicule or insult one another"
+    },
+    {
+      "id": "q09-diversity",
+      "zone": "world-garden",
+      "prompt": "People are different nations and tribes so that we may...",
+      "choices": [
+        "Know one another",
+        "Feel proud over others",
+        "Refuse to meet anyone",
+        "Argue about colors"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Yes. Our differences are a sign to learn and show respect.",
+      "feedbackIncorrect": "Try the answer about meeting and respecting one another.",
+      "source": "Qur'an 49:13 — made into nations and tribes so you may know one another"
+    },
+    {
+      "id": "q10-speak-good",
+      "zone": "library",
+      "prompt": "If you are not sure your words are helpful, what is a safe choice?",
+      "choices": [
+        "Speak good or stay silent",
+        "Say the first thing in your mind",
+        "Shout louder",
+        "Spread rumors"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Wise choice. Good speech or silence protects everyone.",
+      "feedbackIncorrect": "Look for the choice that keeps your tongue gentle and safe.",
+      "source": "Sahih al-Bukhari and Sahih Muslim — speak good or remain silent"
+    },
+    {
+      "id": "q11-mercy",
+      "zone": "animal-garden",
+      "prompt": "How should we treat people and animals in Allah's creation?",
+      "choices": [
+        "With mercy and care",
+        "With roughness",
+        "Only if someone is watching",
+        "By scaring them"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Yes. Mercy is a beautiful Islamic character.",
+      "feedbackIncorrect": "Try the answer filled with gentleness and care.",
+      "source": "Sahih al-Bukhari and Sahih Muslim — Allah shows mercy to those who show mercy to people"
+    },
+    {
+      "id": "q12-ease-after-hardship",
+      "zone": "mountain-path",
+      "prompt": "When something feels hard, what hopeful lesson does Surah Ash-Sharh teach?",
+      "choices": [
+        "With hardship comes ease",
+        "Give up right away",
+        "No one should help",
+        "Hard days last forever"
+      ],
+      "answerIndex": 0,
+      "feedbackCorrect": "Alhamdulillah. Allah reminds us that ease comes with hardship.",
+      "feedbackIncorrect": "Choose the hopeful reminder from the Qur'an.",
+      "source": "Qur'an 94:5-6 — with hardship comes ease"
+    }
+  ],
+  "collectibleLessons": [
+    {
+      "id": "lesson-kind-words",
+      "name": "Kind Words Lantern",
+      "pickupText": "Kind words light up the village.",
+      "lesson": "Before speaking, ask: Is it true? Is it kind? Is it useful?",
+      "source": "Qur'an 2:83; Sahih al-Bukhari and Sahih Muslim — speak good or remain silent"
+    },
+    {
+      "id": "lesson-knowledge-star",
+      "name": "Knowledge Star",
+      "pickupText": "A little star of learning joins your journal.",
+      "lesson": "Say: Rabbi zidni 'ilma — My Lord, increase me in knowledge.",
+      "source": "Qur'an 20:114"
+    },
+    {
+      "id": "lesson-mercy-seed",
+      "name": "Mercy Seed",
+      "pickupText": "Plant mercy and watch kindness grow.",
+      "lesson": "Mercy means treating Allah's creation gently and helping when you can.",
+      "source": "Sahih al-Bukhari and Sahih Muslim — mercy shown to people"
+    },
+    {
+      "id": "lesson-helping-hand",
+      "name": "Helping Hand Token",
+      "pickupText": "You found a helper's token.",
+      "lesson": "Small helpful actions count, even moving harm from a path.",
+      "source": "Sahih al-Bukhari and Sahih Muslim — removing harm from the road is charity"
+    },
+    {
+      "id": "lesson-patience-cloud",
+      "name": "Patience Cloud",
+      "pickupText": "A soft cloud reminds you to breathe and try again.",
+      "lesson": "Use time for faith, good deeds, truth, and patience.",
+      "source": "Qur'an 103:1-3"
+    },
+    {
+      "id": "lesson-respect-flower",
+      "name": "Respect Flower",
+      "pickupText": "A flower blooms when everyone is respected.",
+      "lesson": "Do not mock others. Allah made people different so we may know one another.",
+      "source": "Qur'an 49:11; Qur'an 49:13"
+    }
+  ]
+}
