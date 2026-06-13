@@ -9,9 +9,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 html,
 body,
@@ -22,9 +20,9 @@ body,
   overflow: hidden;
 }
 
-button {
-  font: inherit;
-}
+button,
+input { font: inherit; }
+button { touch-action: manipulation; }
 
 #game-canvas {
   position: fixed;
@@ -36,11 +34,12 @@ button {
 
 .hud,
 .controls,
-.lesson-card {
+.lesson-card,
+.audio-toggle {
   position: fixed;
   z-index: 2;
   border: 1px solid rgba(255, 255, 255, 0.42);
-  background: rgba(255, 251, 226, 0.82);
+  background: rgba(255, 251, 226, 0.84);
   box-shadow: 0 16px 40px rgba(28, 47, 39, 0.18);
   backdrop-filter: blur(12px);
 }
@@ -66,7 +65,7 @@ button {
 
 .hud p {
   margin: 0.35rem 0 0;
-  max-width: 44rem;
+  max-width: 48rem;
   color: #365647;
 }
 
@@ -95,20 +94,108 @@ button {
 .controls {
   left: 20px;
   bottom: 20px;
-  max-width: min(520px, calc(100vw - 40px));
+  max-width: min(620px, calc(100vw - 40px));
   padding: 12px 14px;
   border-radius: 16px;
   color: #254236;
 }
 
+.audio-toggle {
+  right: 20px;
+  top: 118px;
+  z-index: 3;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: #fff7d6;
+  background: rgba(20, 82, 62, 0.88);
+  font-weight: 900;
+  cursor: pointer;
+}
+
 .lesson-card {
   right: 20px;
   bottom: 20px;
-  max-width: min(420px, calc(100vw - 40px));
+  max-width: min(460px, calc(100vw - 40px));
   padding: 14px 16px;
   border-radius: 18px;
   color: #254236;
   font-weight: 700;
+}
+
+.start-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: radial-gradient(circle at 50% 20%, rgba(255, 209, 102, 0.24), transparent 38%), rgba(9, 28, 34, 0.58);
+  backdrop-filter: blur(6px);
+}
+
+.start-screen[hidden] { display: none; }
+
+.start-panel {
+  width: min(560px, calc(100vw - 32px));
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 34px;
+  padding: 28px;
+  color: #173a30;
+  background: linear-gradient(145deg, rgba(255, 251, 226, 0.96), rgba(232, 244, 216, 0.94));
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.38);
+}
+
+.start-panel h2 {
+  margin: 0 0 18px;
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  line-height: 0.95;
+  color: #14523e;
+}
+
+.start-panel label {
+  display: grid;
+  gap: 8px;
+  font-weight: 900;
+}
+
+.start-panel input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(20, 82, 62, 0.22);
+  border-radius: 16px;
+  padding: 0 14px;
+  color: #173a30;
+  background: rgba(255, 255, 255, 0.78);
+  font-weight: 800;
+}
+
+.character-picks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.character-pick {
+  min-height: 54px;
+  border: 2px solid rgba(20, 82, 62, 0.18);
+  border-radius: 18px;
+  color: #173a30;
+  background: rgba(255, 255, 255, 0.62);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.character-pick.selected {
+  border-color: #14523e;
+  color: #fff7d6;
+  background: linear-gradient(145deg, #14523e, #22a06b);
+}
+
+.start-note {
+  margin: 14px 0 0;
+  color: #365647;
+  font-size: 0.92rem;
 }
 
 .quiz-modal {
@@ -126,9 +213,7 @@ button {
   backdrop-filter: blur(4px);
 }
 
-.quiz-modal form {
-  padding: 26px;
-}
+.quiz-modal form { padding: 26px; }
 
 .eyebrow {
   margin: 0 0 8px;
@@ -164,20 +249,9 @@ button {
   text-align: left;
 }
 
-.quiz-choices button:hover:not(:disabled) {
-  background: #d6efc6;
-}
-
-.quiz-choices button:disabled {
-  cursor: default;
-  opacity: 0.7;
-}
-
-.quiz-choices .right-answer {
-  color: #05351f;
-  background: #9be38f;
-  opacity: 1;
-}
+.quiz-choices button:hover:not(:disabled) { background: #d6efc6; }
+.quiz-choices button:disabled { cursor: default; opacity: 0.7; }
+.quiz-choices .right-answer { color: #05351f; background: #9be38f; opacity: 1; }
 
 .feedback {
   min-height: 1.5rem;
@@ -185,21 +259,14 @@ button {
   color: #7a4c08;
   font-weight: 700;
 }
-
-.feedback.correct {
-  color: #16743c;
-}
+.feedback.correct { color: #16743c; }
 
 .primary {
   width: 100%;
   color: #fffbe8;
   background: #14523e;
 }
-
-.primary:disabled {
-  cursor: not-allowed;
-  background: #98ad9e;
-}
+.primary:disabled { cursor: not-allowed; background: #98ad9e; }
 
 .touch-controls {
   position: fixed;
@@ -232,20 +299,8 @@ button {
   position: absolute;
   background: rgba(255, 247, 214, 0.42);
 }
-
-.joystick::before {
-  left: 50%;
-  top: 18px;
-  bottom: 18px;
-  width: 2px;
-}
-
-.joystick::after {
-  top: 50%;
-  left: 18px;
-  right: 18px;
-  height: 2px;
-}
+.joystick::before { left: 50%; top: 18px; bottom: 18px; width: 2px; }
+.joystick::after { top: 50%; left: 18px; right: 18px; height: 2px; }
 
 .joystick-knob {
   position: absolute;
@@ -262,11 +317,7 @@ button {
   transition: transform 80ms ease-out;
 }
 
-.touch-actions {
-  display: grid;
-  gap: 10px;
-}
-
+.touch-actions { display: grid; gap: 10px; }
 .touch-actions button {
   min-width: 82px;
   min-height: 52px;
@@ -295,17 +346,8 @@ button {
   text-align: center;
   backdrop-filter: blur(14px);
 }
-
-.win-card h2 {
-  margin: 0 0 10px;
-  font-size: clamp(2rem, 6vw, 3.8rem);
-}
-
-.win-card p {
-  margin: 0 0 20px;
-  line-height: 1.5;
-}
-
+.win-card h2 { margin: 0 0 10px; font-size: clamp(2rem, 6vw, 3.8rem); }
+.win-card p { margin: 0 0 20px; line-height: 1.5; }
 .win-card button {
   min-height: 48px;
   border: 0;
@@ -321,17 +363,13 @@ button {
   .hud {
     flex-direction: column;
     padding: 12px 14px;
+    gap: 10px;
   }
-
   .hud p,
-  .controls {
-    display: none;
-  }
-
-  .touch-controls {
-    display: flex;
-  }
-
+  .controls { display: none; }
+  .stats span { min-width: 86px; padding: 8px 10px; }
+  .audio-toggle { top: auto; right: 16px; bottom: 228px; }
+  .touch-controls { display: flex; }
   .lesson-card {
     bottom: 196px;
     left: 20px;
@@ -339,4 +377,5 @@ button {
     max-width: none;
     font-size: 0.9rem;
   }
+  .character-picks { grid-template-columns: 1fr; }
 }

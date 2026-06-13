@@ -3,7 +3,7 @@ import './style.css'
 import { quizzes, zoneLessons, type Quiz, type ZoneId } from './content/lessons'
 
 type KnowledgeOrb = {
-  mesh: THREE.Mesh
+  mesh: THREE.Object3D
   zone: ZoneId
   quiz: Quiz
   collected: boolean
@@ -33,17 +33,34 @@ const zones: Record<ZoneId, { title: string; color: number; position: THREE.Vect
 const app = document.querySelector<HTMLDivElement>('#app')!
 app.innerHTML = `
   <canvas id="game-canvas" aria-label="Kampung Iman WebGL prototype"></canvas>
+  <section class="start-screen" id="start-screen">
+    <div class="start-panel">
+      <p class="eyebrow">Kampung Iman Adventure</p>
+      <h2>Pilih karakter dan mulai belajar</h2>
+      <label>Nama anak
+        <input id="player-name" maxlength="18" placeholder="contoh: Aisyah" value="Aisyah" />
+      </label>
+      <div class="character-picks">
+        <button class="character-pick selected" data-character="girl">Anak Perempuan Syar'i</button>
+        <button class="character-pick" data-character="boy">Anak Laki-laki Syar'i</button>
+      </div>
+      <button class="primary" id="start-game">Mulai Jelajah</button>
+      <p class="start-note">Kontrol: keyboard atau joystick touchscreen. Belajar lewat aktivitas, bukan tabrak-tabrakan.</p>
+    </div>
+  </section>
   <div class="hud">
     <div>
       <h1>Kampung Iman</h1>
-      <p>Drive through adab, ilmu, and sadaqah zones. Collect wisdom orbs and answer grounded quizzes.</p>
+      <p>Choose a syar'i kid character, walk through adab, ilmu, and sadaqah activity scenes, then answer grounded quests.</p>
     </div>
     <div class="stats">
+      <span>Player <strong id="player-label">Aisyah</strong></span>
       <span>Score <strong id="score">0</strong></span>
-      <span>Orbs <strong id="orbs">0/12</strong></span>
+      <span>Quests <strong id="orbs">0/12</strong></span>
     </div>
   </div>
-  <div class="controls">WASD / Arrow keys drive · Space brakes · R resets</div>
+  <button class="audio-toggle" id="audio-toggle">Sound Off</button>
+  <div class="controls">WASD / Arrow keys move · Space slows · R resets · Tap activities for quests</div>
   <div class="touch-controls" aria-label="Touch driving controls">
     <div class="joystick" id="joystick" aria-label="Drag to steer and drive">
       <div class="joystick-knob" id="joystick-knob"></div>
@@ -72,6 +89,7 @@ app.innerHTML = `
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas')!
 const scoreElement = document.querySelector<HTMLElement>('#score')!
+const playerLabel = document.querySelector<HTMLElement>('#player-label')!
 const orbsElement = document.querySelector<HTMLElement>('#orbs')!
 const lessonCard = document.querySelector<HTMLElement>('#lesson-card')!
 const quizModal = document.querySelector<HTMLDialogElement>('#quiz-modal')!
@@ -82,6 +100,10 @@ const quizFeedback = document.querySelector<HTMLElement>('#quiz-feedback')!
 const continueButton = document.querySelector<HTMLButtonElement>('#continue-button')!
 const winCard = document.querySelector<HTMLElement>('#win-card')!
 const playAgainButton = document.querySelector<HTMLButtonElement>('#play-again')!
+const startScreen = document.querySelector<HTMLElement>('#start-screen')!
+const startGameButton = document.querySelector<HTMLButtonElement>('#start-game')!
+const playerNameInput = document.querySelector<HTMLInputElement>('#player-name')!
+const audioToggle = document.querySelector<HTMLButtonElement>('#audio-toggle')!
 const joystick = document.querySelector<HTMLElement>('#joystick')!
 const joystickKnob = document.querySelector<HTMLElement>('#joystick-knob')!
 const touchBrake = document.querySelector<HTMLButtonElement>('#touch-brake')!
@@ -91,6 +113,122 @@ const scene = new THREE.Scene()
 scene.background = new THREE.Color(0xbfe7ff)
 scene.fog = new THREE.Fog(0xbfe7ff, 35, 85)
 
+const textureLoader = new THREE.TextureLoader()
+textureLoader.load('./assets/kampung-iman-skybox.png', (texture) => {
+  texture.colorSpace = THREE.SRGBColorSpace
+  scene.background = texture
+})
+
+function createCanvasTexture(size: number, draw: (ctx: CanvasRenderingContext2D, size: number) => void) {
+  const textureCanvas = document.createElement('canvas')
+  textureCanvas.width = size
+  textureCanvas.height = size
+  const ctx = textureCanvas.getContext('2d')!
+  draw(ctx, size)
+  const texture = new THREE.CanvasTexture(textureCanvas)
+  texture.colorSpace = THREE.SRGBColorSpace
+  texture.wrapS = THREE.RepeatWrapping
+  texture.wrapT = THREE.RepeatWrapping
+  texture.needsUpdate = true
+  return texture
+}
+
+function repeated(texture: THREE.Texture, x: number, y: number) {
+  const clone = texture.clone()
+  clone.wrapS = THREE.RepeatWrapping
+  clone.wrapT = THREE.RepeatWrapping
+  clone.repeat.set(x, y)
+  clone.needsUpdate = true
+  return clone
+}
+
+const grassTexture = createCanvasTexture(256, (ctx, size) => {
+  const gradient = ctx.createLinearGradient(0, 0, size, size)
+  gradient.addColorStop(0, '#8fca6b')
+  gradient.addColorStop(1, '#5fa25d')
+  ctx.fillStyle = gradient
+  ctx.fillRect(0, 0, size, size)
+  for (let i = 0; i < 120; i += 1) {
+    const x = (i * 37) % size
+    const y = (i * 71) % size
+    ctx.strokeStyle = i % 3 === 0 ? 'rgba(255,237,158,0.18)' : 'rgba(27,91,52,0.18)'
+    ctx.lineWidth = 1 + (i % 2)
+    ctx.beginPath()
+    ctx.moveTo(x, y)
+    ctx.lineTo(x + 8, y - 13)
+    ctx.stroke()
+  }
+})
+
+const roadTexture = createCanvasTexture(256, (ctx, size) => {
+  ctx.fillStyle = '#665a4b'
+  ctx.fillRect(0, 0, size, size)
+  for (let y = 0; y < size; y += 34) {
+    for (let x = 0; x < size; x += 52) {
+      ctx.fillStyle = (x + y) % 3 ? 'rgba(255,244,214,0.08)' : 'rgba(35,27,20,0.10)'
+      ctx.fillRect(x + ((y / 34) % 2) * 18, y, 42, 22)
+    }
+  }
+  ctx.strokeStyle = 'rgba(255,251,226,0.12)'
+  ctx.lineWidth = 2
+  for (let y = 0; y < size; y += 34) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(size, y); ctx.stroke()
+  }
+})
+
+const plasterTexture = createCanvasTexture(256, (ctx, size) => {
+  ctx.fillStyle = '#e8c27c'
+  ctx.fillRect(0, 0, size, size)
+  for (let i = 0; i < 180; i += 1) {
+    ctx.fillStyle = i % 2 ? 'rgba(255,255,255,0.12)' : 'rgba(119,71,38,0.10)'
+    ctx.beginPath()
+    ctx.arc((i * 47) % size, (i * 83) % size, 1 + (i % 4), 0, Math.PI * 2)
+    ctx.fill()
+  }
+})
+
+const roofTexture = createCanvasTexture(256, (ctx, size) => {
+  ctx.fillStyle = '#6b3f30'
+  ctx.fillRect(0, 0, size, size)
+  for (let y = 0; y < size; y += 28) {
+    for (let x = -20; x < size; x += 40) {
+      ctx.fillStyle = 'rgba(255,209,102,0.12)'
+      ctx.beginPath()
+      ctx.ellipse(x + ((y / 28) % 2) * 20, y, 24, 11, 0, 0, Math.PI)
+      ctx.fill()
+    }
+  }
+})
+
+const woodTexture = createCanvasTexture(256, (ctx, size) => {
+  ctx.fillStyle = '#8b5a2b'
+  ctx.fillRect(0, 0, size, size)
+  for (let x = 0; x < size; x += 18) {
+    ctx.strokeStyle = x % 36 ? 'rgba(255,222,154,0.18)' : 'rgba(54,31,18,0.18)'
+    ctx.lineWidth = 2
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.bezierCurveTo(x + 12, 80, x - 12, 160, x + 8, size); ctx.stroke()
+  }
+})
+
+const leafTexture = createCanvasTexture(128, (ctx, size) => {
+  ctx.fillStyle = '#2f8f46'
+  ctx.fillRect(0, 0, size, size)
+  for (let i = 0; i < 60; i += 1) {
+    ctx.strokeStyle = i % 2 ? 'rgba(180,240,150,0.24)' : 'rgba(8,72,38,0.2)'
+    ctx.beginPath(); ctx.moveTo((i * 29) % size, (i * 17) % size); ctx.lineTo(((i * 29) % size) + 16, ((i * 17) % size) - 9); ctx.stroke()
+  }
+})
+
+const carPaintTexture = createCanvasTexture(128, (ctx, size) => {
+  const gradient = ctx.createLinearGradient(0, 0, size, size)
+  gradient.addColorStop(0, '#ff7058')
+  gradient.addColorStop(0.5, '#d84b38')
+  gradient.addColorStop(1, '#9d2f25')
+  ctx.fillStyle = gradient
+  ctx.fillRect(0, 0, size, size)
+  ctx.fillStyle = 'rgba(255,255,255,0.16)'
+  ctx.fillRect(0, 18, size, 10)
+})
 const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 160)
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, preserveDrawingBuffer: true })
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -114,13 +252,13 @@ scene.add(sun)
 
 const ground = new THREE.Mesh(
   new THREE.BoxGeometry(70, 0.4, 70),
-  new THREE.MeshStandardMaterial({ color: 0x8fca6b, roughness: 0.9 }),
+  new THREE.MeshStandardMaterial({ color: 0x8fca6b, map: repeated(grassTexture, 18, 18), roughness: 0.95 }),
 )
 ground.receiveShadow = true
 ground.position.y = -0.22
 scene.add(ground)
 
-const roadMaterial = new THREE.MeshStandardMaterial({ color: 0x665a4b, roughness: 0.85 })
+const roadMaterial = new THREE.MeshStandardMaterial({ color: 0x665a4b, map: repeated(roadTexture, 2, 12), roughness: 0.88 })
 const mainRoad = new THREE.Mesh(new THREE.BoxGeometry(7, 0.05, 52), roadMaterial)
 mainRoad.position.set(0, 0.03, 0)
 mainRoad.receiveShadow = true
@@ -130,71 +268,119 @@ crossRoad.position.set(0, 0.04, -5)
 crossRoad.receiveShadow = true
 scene.add(crossRoad)
 
+for (let z = -24; z <= 24; z += 4) {
+  const stripe = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.065, 1.7), new THREE.MeshStandardMaterial({ color: 0xfff4d6, roughness: 0.7 }))
+  stripe.position.set(0, 0.085, z)
+  stripe.receiveShadow = true
+  scene.add(stripe)
+}
+for (let x = -15; x <= 15; x += 4) {
+  const stripe = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.066, 0.3), new THREE.MeshStandardMaterial({ color: 0xfff4d6, roughness: 0.7 }))
+  stripe.position.set(x, 0.09, -5)
+  stripe.receiveShadow = true
+  scene.add(stripe)
+}
+
 const car = new THREE.Group()
 const body = new THREE.Mesh(
-  new THREE.BoxGeometry(1.9, 0.65, 3.1),
-  new THREE.MeshStandardMaterial({ color: 0xd84b38, roughness: 0.55 }),
+  new THREE.CylinderGeometry(0.62, 0.74, 1.45, 16),
+  new THREE.MeshStandardMaterial({ color: 0x2b6eea, map: repeated(plasterTexture, 1, 1), roughness: 0.72 }),
 )
-body.position.y = 0.72
+body.position.y = 0.95
 body.castShadow = true
 car.add(body)
 const cabin = new THREE.Mesh(
-  new THREE.BoxGeometry(1.35, 0.55, 1.35),
-  new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.45 }),
+  new THREE.SphereGeometry(0.38, 18, 12),
+  new THREE.MeshStandardMaterial({ color: 0xd9a06d, roughness: 0.78 }),
 )
-cabin.position.set(0, 1.22, -0.28)
+cabin.position.set(0, 1.85, 0)
 cabin.castShadow = true
 car.add(cabin)
-const windshield = new THREE.Mesh(
-  new THREE.BoxGeometry(1.18, 0.08, 0.74),
-  new THREE.MeshStandardMaterial({ color: 0x86d7ff, roughness: 0.18, metalness: 0.05 }),
+const scarf = new THREE.Mesh(
+  new THREE.ConeGeometry(0.55, 0.92, 18),
+  new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.76 }),
 )
-windshield.position.set(0, 1.54, 0.38)
-windshield.rotation.x = -0.42
-car.add(windshield)
-const roofRack = new THREE.Group()
-;[-0.42, 0.42].forEach((x) => {
-  const rail = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 1.35), new THREE.MeshStandardMaterial({ color: 0x5b3b2e, roughness: 0.7 }))
-  rail.position.set(x, 1.56, -0.28)
-  rail.castShadow = true
-  roofRack.add(rail)
-})
-roofRack.position.y = 0.08
-car.add(roofRack)
-;[-0.58, 0.58].forEach((x) => {
-  const headlight = new THREE.Mesh(new THREE.SphereGeometry(0.16, 14, 8), new THREE.MeshStandardMaterial({ color: 0xfff2a8, emissive: 0xffc65a, emissiveIntensity: 0.9 }))
-  headlight.position.set(x, 0.74, 1.62)
-  car.add(headlight)
-})
-const wheelMaterial = new THREE.MeshStandardMaterial({ color: 0x1d2433, roughness: 0.8 })
+scarf.position.set(0, 1.72, -0.03)
+scarf.castShadow = true
+car.add(scarf)
+const cap = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.39, 0.39, 0.18, 18),
+  new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.66 }),
+)
+cap.position.set(0, 2.15, 0)
+cap.castShadow = true
+cap.visible = false
+car.add(cap)
+const backpack = new THREE.Mesh(
+  new THREE.BoxGeometry(0.46, 0.72, 0.18),
+  new THREE.MeshStandardMaterial({ color: 0x14523e, map: repeated(carPaintTexture, 1, 1), roughness: 0.72 }),
+)
+backpack.position.set(0, 1.08, -0.63)
+backpack.castShadow = true
+car.add(backpack)
+const leftLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 0.62, 10), new THREE.MeshStandardMaterial({ color: 0x1d2433, roughness: 0.82 }))
+const rightLeg = leftLeg.clone()
+leftLeg.position.set(-0.24, 0.32, 0)
+rightLeg.position.set(0.24, 0.32, 0)
+leftLeg.castShadow = rightLeg.castShadow = true
+car.add(leftLeg, rightLeg)
+const leftArm = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.09, 0.78, 10), new THREE.MeshStandardMaterial({ color: 0xd9a06d, roughness: 0.78 }))
+const rightArm = leftArm.clone()
+leftArm.position.set(-0.68, 1.08, 0.05)
+rightArm.position.set(0.68, 1.08, 0.05)
+leftArm.rotation.z = 0.28
+rightArm.rotation.z = -0.28
+leftArm.castShadow = rightArm.castShadow = true
+car.add(leftArm, rightArm)
+const characterShadow = new THREE.Mesh(
+  new THREE.CircleGeometry(0.95, 32),
+  new THREE.MeshBasicMaterial({ color: 0x173a30, transparent: true, opacity: 0.18 }),
+)
+characterShadow.rotation.x = -Math.PI / 2
+characterShadow.position.y = 0.015
+car.add(characterShadow)
 const wheelMeshes: THREE.Mesh[] = []
-;[
-  [-1.05, 0.43, 1.0],
-  [1.05, 0.43, 1.0],
-  [-1.05, 0.43, -1.05],
-  [1.05, 0.43, -1.05],
-].forEach(([x, y, z]) => {
-  const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.28, 16), wheelMaterial)
-  wheel.rotation.z = Math.PI / 2
-  wheel.position.set(x, y, z)
-  wheel.castShadow = true
-  wheelMeshes.push(wheel)
-  car.add(wheel)
-})
 car.position.set(0, 0, 0)
 scene.add(car)
+
+type CharacterChoice = 'girl' | 'boy'
+let selectedCharacter: CharacterChoice = 'girl'
+let playerName = 'Aisyah'
+let gameStarted = false
+function applyCharacterChoice(choice: CharacterChoice) {
+  selectedCharacter = choice
+  const robe = body.material as THREE.MeshStandardMaterial
+  if (choice === 'girl') {
+    robe.color.setHex(0x7b5fd6)
+    scarf.visible = true
+    cap.visible = false
+    playerNameInput.value = playerNameInput.value || 'Aisyah'
+  } else {
+    robe.color.setHex(0x2b6eea)
+    scarf.visible = false
+    cap.visible = true
+    playerNameInput.value = playerNameInput.value || 'Raihan'
+  }
+}
+
+type Collider = { center: THREE.Vector3; radius: number; label: string }
+const colliders: Collider[] = []
+function addCollider(center: THREE.Vector3, radius: number, label: string) {
+  colliders.push({ center: center.clone(), radius, label })
+}
 
 function addLowPolyTree(x: number, z: number, scale = 1) {
   const trunk = new THREE.Mesh(
     new THREE.CylinderGeometry(0.15 * scale, 0.22 * scale, 1.2 * scale, 5),
-    new THREE.MeshStandardMaterial({ color: 0x8b5a2b }),
+    new THREE.MeshStandardMaterial({ color: 0x8b5a2b, map: repeated(woodTexture, 1, 3), roughness: 0.82 }),
   )
   trunk.position.set(x, 0.6 * scale, z)
   trunk.castShadow = true
   scene.add(trunk)
+  addCollider(new THREE.Vector3(x, 0, z), 0.62 * scale, 'tree')
   const leaves = new THREE.Mesh(
     new THREE.ConeGeometry(0.9 * scale, 1.7 * scale, 6),
-    new THREE.MeshStandardMaterial({ color: 0x2f8f46, roughness: 0.8 }),
+    new THREE.MeshStandardMaterial({ color: 0x2f8f46, map: repeated(leafTexture, 1, 1), roughness: 0.84 }),
   )
   leaves.position.set(x, 1.85 * scale, z)
   leaves.castShadow = true
@@ -235,6 +421,7 @@ function addRamp(x: number, z: number, rotation = 0) {
   ramp.castShadow = true
   ramp.receiveShadow = true
   scene.add(ramp)
+  addCollider(new THREE.Vector3(x, 0, z), 2.5, 'ramp')
 }
 
 type PickupParticle = { mesh: THREE.Mesh; velocity: THREE.Vector3; life: number; maxLife: number }
@@ -275,7 +462,7 @@ function addFenceLine(startX: number, z: number, count: number, spacing: number,
 
 function addArchGate(x: number, z: number, color: number, rotation = 0) {
   const group = new THREE.Group()
-  const material = new THREE.MeshStandardMaterial({ color, roughness: 0.74 })
+  const material = new THREE.MeshStandardMaterial({ color, map: repeated(plasterTexture, 1, 2), roughness: 0.74 })
   const left = new THREE.Mesh(new THREE.BoxGeometry(0.45, 2.5, 0.45), material)
   left.position.set(-1.35, 1.25, 0)
   const right = left.clone()
@@ -289,6 +476,7 @@ function addArchGate(x: number, z: number, color: number, rotation = 0) {
   group.rotation.y = rotation
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
+  addCollider(new THREE.Vector3(x, 0, z), 1.7, 'arch gate')
 }
 
 function addLantern(x: number, z: number, color = 0xffd166) {
@@ -320,6 +508,7 @@ function addPlanter(x: number, z: number) {
   box.castShadow = true
   sprout.castShadow = true
   scene.add(box, sprout)
+  addCollider(new THREE.Vector3(x, 0, z), 0.85, 'planter')
 }
 
 function addFountain(x: number, z: number) {
@@ -331,19 +520,21 @@ function addFountain(x: number, z: number) {
   jet.position.set(x, 1.0, z)
   basin.castShadow = true
   scene.add(basin, water, jet)
+  addCollider(new THREE.Vector3(x, 0, z), 1.35, 'fountain')
 }
 
 function addSmallHouse(x: number, z: number, color: number) {
   const group = new THREE.Group()
-  const base = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.35, 2.0), new THREE.MeshStandardMaterial({ color, roughness: 0.78 }))
+  const base = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.35, 2.0), new THREE.MeshStandardMaterial({ color, map: repeated(plasterTexture, 1, 1), roughness: 0.78 }))
   base.position.y = 0.68
-  const roof = new THREE.Mesh(new THREE.ConeGeometry(1.75, 0.95, 4), new THREE.MeshStandardMaterial({ color: 0x8c4b31, roughness: 0.85 }))
+  const roof = new THREE.Mesh(new THREE.ConeGeometry(1.75, 0.95, 4), new THREE.MeshStandardMaterial({ color: 0x8c4b31, map: repeated(roofTexture, 1, 1), roughness: 0.85 }))
   roof.position.y = 1.72
   roof.rotation.y = Math.PI / 4
   group.add(base, roof)
   group.position.set(x, 0, z)
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
+  addCollider(new THREE.Vector3(x, 0, z), 1.9, 'house')
 }
 
 function addZoneSetDressing(id: ZoneId, position: THREE.Vector3, color: number) {
@@ -369,14 +560,14 @@ function addBuilding(position: THREE.Vector3, color: number, label: string) {
   const group = new THREE.Group()
   const base = new THREE.Mesh(
     new THREE.BoxGeometry(5.4, 2.2, 4.6),
-    new THREE.MeshStandardMaterial({ color, roughness: 0.75 }),
+    new THREE.MeshStandardMaterial({ color, map: repeated(plasterTexture, 2, 1), roughness: 0.76 }),
   )
   base.position.y = 1.1
   base.castShadow = true
   group.add(base)
   const roof = new THREE.Mesh(
     new THREE.ConeGeometry(3.8, 1.4, 4),
-    new THREE.MeshStandardMaterial({ color: 0x5b3b2e, roughness: 0.85 }),
+    new THREE.MeshStandardMaterial({ color: 0x5b3b2e, map: repeated(roofTexture, 2, 2), roughness: 0.86 }),
   )
   roof.position.y = 2.9
   roof.rotation.y = Math.PI / 4
@@ -396,6 +587,51 @@ function addBuilding(position: THREE.Vector3, color: number, label: string) {
   scene.add(group)
 }
 
+
+function createQuestScene(zone: ZoneId, quiz: Quiz, position: THREE.Vector3, index: number) {
+  const color = zones[zone].color
+  const group = new THREE.Group()
+  group.position.copy(position)
+  const base = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.9, 1.05, 0.18, 24),
+    new THREE.MeshStandardMaterial({ color, transparent: true, opacity: 0.82, roughness: 0.65 }),
+  )
+  base.position.y = 0.12
+  const npcBody = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.22, 0.28, 0.82, 14),
+    new THREE.MeshStandardMaterial({ color: zone === 'sadaqah' ? 0xf0a629 : zone === 'ilmu' ? 0x2b6eea : 0x22a06b, roughness: 0.75 }),
+  )
+  npcBody.position.set(-0.34, 0.72, 0)
+  const npcHead = new THREE.Mesh(new THREE.SphereGeometry(0.18, 14, 10), new THREE.MeshStandardMaterial({ color: 0xd9a06d, roughness: 0.8 }))
+  npcHead.position.set(-0.34, 1.24, 0)
+  const activity = new THREE.Group()
+  if (zone === 'ilmu') {
+    const book = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.12, 0.46), new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.58 }))
+    book.position.set(0.32, 0.48, 0)
+    activity.add(book)
+  } else if (zone === 'sadaqah') {
+    const basket = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.38, 0.42), new THREE.MeshStandardMaterial({ color: 0x9b623a, map: repeated(woodTexture, 1, 1), roughness: 0.8 }))
+    basket.position.set(0.34, 0.45, 0)
+    const fruit = new THREE.Mesh(new THREE.SphereGeometry(0.14, 12, 8), new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.62 }))
+    fruit.position.set(0.24, 0.76, 0.08)
+    activity.add(basket, fruit)
+  } else {
+    const salam = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.035, 10, 24), new THREE.MeshStandardMaterial({ color: 0xffd166, emissive: 0x22a06b, emissiveIntensity: 0.35 }))
+    salam.position.set(0.34, 0.82, 0)
+    activity.add(salam)
+  }
+  const halo = new THREE.Mesh(new THREE.TorusGeometry(1.08, 0.025, 8, 48), new THREE.MeshStandardMaterial({ color: 0xfff3a3, emissive: color, emissiveIntensity: 0.8 }))
+  halo.rotation.x = Math.PI / 2
+  halo.position.y = 0.18
+  const label = makeLabelSprite(index % 2 === 0 ? 'Quest' : 'Activity', `#${color.toString(16).padStart(6, '0')}`)
+  label.position.set(0, 1.95, 0)
+  label.scale.set(2.4, 0.62, 1)
+  group.add(base, npcBody, npcHead, activity, halo, label)
+  group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
+  group.userData.title = quiz.question
+  return group
+}
+
 const knowledgeOrbs: KnowledgeOrb[] = []
 
 Object.entries(zones).forEach(([id, zone]) => {
@@ -411,14 +647,9 @@ Object.entries(zones).forEach(([id, zone]) => {
   quizzes[id as ZoneId].forEach((quiz, index, zoneQuizzes) => {
     const angle = (index / zoneQuizzes.length) * Math.PI * 2 + (id === 'ilmu' ? Math.PI / 2 : 0)
     const radius = id === 'ilmu' ? 4.4 : 3.7
-    const orb = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.45, 1),
-      new THREE.MeshStandardMaterial({ color: 0xfff3a3, emissive: zone.color, emissiveIntensity: 0.7, roughness: 0.2 }),
-    )
-    orb.position.set(zone.position.x + Math.cos(angle) * radius, 1.1, zone.position.z + Math.sin(angle) * radius)
-    orb.castShadow = true
-    scene.add(orb)
-    knowledgeOrbs.push({ mesh: orb, zone: id as ZoneId, quiz, collected: false })
+    const activity = createQuestScene(id as ZoneId, quiz, new THREE.Vector3(zone.position.x + Math.cos(angle) * radius, 0, zone.position.z + Math.sin(angle) * radius), index)
+    scene.add(activity)
+    knowledgeOrbs.push({ mesh: activity, zone: id as ZoneId, quiz, collected: false })
   })
 })
 
@@ -441,6 +672,8 @@ let collected = 0
 let activeOrb: KnowledgeOrb | null = null
 let pausedForQuiz = false
 let finished = false
+let audioContext: AudioContext | null = null
+let songTimer = 0
 const clock = new THREE.Clock()
 
 window.addEventListener('keydown', (event) => {
@@ -490,6 +723,8 @@ function resetCar() {
   speed = 0
   body.rotation.set(0, 0, 0)
   cabin.rotation.set(0, 0, 0)
+  leftArm.rotation.x = 0
+  rightArm.rotation.x = 0
 }
 
 function resize() {
@@ -499,7 +734,7 @@ function resize() {
 }
 
 function updateVehicle(dt: number) {
-  if (pausedForQuiz) return
+  if (!gameStarted || pausedForQuiz) return
   const forward = keys.has('w') || keys.has('arrowup') || touchInput.throttle > 0.16
   const backward = keys.has('s') || keys.has('arrowdown') || touchInput.throttle < -0.28
   const left = keys.has('a') || keys.has('arrowleft')
@@ -522,15 +757,31 @@ function updateVehicle(dt: number) {
   car.rotation.y += steering * turnStrength * dt * 2.5 * Math.sign(speed || 1)
   body.rotation.z = THREE.MathUtils.lerp(body.rotation.z, steering * 0.10 * turnStrength, 0.12)
   cabin.rotation.z = THREE.MathUtils.lerp(cabin.rotation.z, steering * 0.07 * turnStrength, 0.12)
-  body.position.y = 0.72 + Math.sin(clock.elapsedTime * 9) * Math.min(Math.abs(speed) / 90, 0.045)
+  body.position.y = 0.95 + Math.sin(clock.elapsedTime * 9) * Math.min(Math.abs(speed) / 40, 0.08)
 
   const direction = new THREE.Vector3(Math.sin(car.rotation.y), 0, Math.cos(car.rotation.y))
   car.position.addScaledVector(direction, speed * dt)
+  colliders.forEach((collider) => {
+    const dx = car.position.x - collider.center.x
+    const dz = car.position.z - collider.center.z
+    const distance = Math.hypot(dx, dz) || 0.0001
+    const minDistance = collider.radius + 0.72
+    if (distance < minDistance) {
+      const push = (minDistance - distance)
+      car.position.x += (dx / distance) * push
+      car.position.z += (dz / distance) * push
+      speed *= 0.35
+    }
+  })
   car.position.x = THREE.MathUtils.clamp(car.position.x, -31, 31)
   car.position.z = THREE.MathUtils.clamp(car.position.z, -31, 31)
+  leftLeg.rotation.x = Math.sin(clock.elapsedTime * 9) * Math.min(Math.abs(speed) / 16, 0.55)
+  rightLeg.rotation.x = -leftLeg.rotation.x
+  leftArm.rotation.x = -leftLeg.rotation.x * 0.55
+  rightArm.rotation.x = leftLeg.rotation.x * 0.55
 
   const currentZone = Object.values(zones).find((zone) => car.position.distanceTo(zone.position) < 6.5)
-  lessonCard.textContent = currentZone ? `${currentZone.title}: ${zoneLessons[(Object.keys(zones) as ZoneId[]).find((id) => zones[id] === currentZone)!]}` : 'Follow the glowing orbs. Each one unlocks a short quiz and a wisdom point.'
+  lessonCard.textContent = currentZone ? `${currentZone.title}: ${zoneLessons[(Object.keys(zones) as ZoneId[]).find((id) => zones[id] === currentZone)!]}` : 'Walk to activity circles. Each scene opens a short quest and a wisdom point.'
 }
 
 function updateCamera(dt: number) {
@@ -545,7 +796,7 @@ function checkOrbs() {
   if (pausedForQuiz) return
   knowledgeOrbs.forEach((orb) => {
     if (orb.collected) return
-    if (orb.mesh.position.distanceTo(car.position) < 1.7) openQuiz(orb)
+    if (orb.mesh.position.distanceTo(car.position) < 1.9) openQuiz(orb)
   })
 }
 
@@ -553,7 +804,7 @@ function openQuiz(orb: KnowledgeOrb) {
   activeOrb = orb
   pausedForQuiz = true
   speed = 0
-  quizZone.textContent = zones[orb.zone].title
+  quizZone.textContent = `${zones[orb.zone].title} · Activity with ${playerName}`
   quizQuestion.textContent = orb.quiz.question
   quizFeedback.textContent = ''
   continueButton.disabled = true
@@ -576,6 +827,7 @@ function answerQuiz(index: number) {
   activeOrb.collected = true
   activeOrb.mesh.visible = false
   burstAt(activeOrb.mesh.position, zones[activeOrb.zone].color)
+  playPickupSound()
   quizFeedback.textContent = `${correct ? 'Correct!' : 'Good try.'} ${activeOrb.quiz.explanation}`
   quizFeedback.className = correct ? 'feedback correct' : 'feedback'
   Array.from(quizChoices.children).forEach((child, childIndex) => {
@@ -597,6 +849,69 @@ continueButton.addEventListener('click', () => {
   activeOrb = null
 })
 
+
+document.querySelectorAll<HTMLButtonElement>('.character-pick').forEach((button) => {
+  button.addEventListener('click', () => {
+    document.querySelectorAll<HTMLButtonElement>('.character-pick').forEach((item) => item.classList.remove('selected'))
+    button.classList.add('selected')
+    applyCharacterChoice((button.dataset.character as CharacterChoice) || 'girl')
+  })
+})
+
+startGameButton.addEventListener('click', () => {
+  playerName = playerNameInput.value.trim() || (selectedCharacter === 'girl' ? 'Aisyah' : 'Raihan')
+  playerLabel.textContent = playerName
+  startScreen.hidden = true
+  gameStarted = true
+  lessonCard.textContent = `${playerName}, walk to an activity circle to begin your first quest.`
+  initAudio()
+})
+
+function initAudio() {
+  if (!audioContext) {
+    audioContext = new AudioContext()
+  }
+  if (audioContext.state === 'suspended') audioContext.resume()
+  audioToggle.textContent = 'Sound On'
+}
+
+audioToggle.addEventListener('click', () => {
+  if (!audioContext) initAudio()
+  else if (audioContext.state === 'running') { audioContext.suspend(); audioToggle.textContent = 'Sound Off' }
+  else { audioContext.resume(); audioToggle.textContent = 'Sound On' }
+})
+
+function playTone(frequency: number, duration = 0.16, gainValue = 0.045) {
+  if (!audioContext || audioContext.state !== 'running') return
+  const osc = audioContext.createOscillator()
+  const gain = audioContext.createGain()
+  osc.type = 'sine'
+  osc.frequency.value = frequency
+  gain.gain.setValueAtTime(0, audioContext.currentTime)
+  gain.gain.linearRampToValueAtTime(gainValue, audioContext.currentTime + 0.02)
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration)
+  osc.connect(gain).connect(audioContext.destination)
+  osc.start()
+  osc.stop(audioContext.currentTime + duration)
+}
+
+function playPickupSound() {
+  playTone(660, 0.12, 0.05)
+  window.setTimeout(() => playTone(880, 0.16, 0.04), 90)
+}
+
+function updateAmbientSong(dt: number) {
+  if (!audioContext || audioContext.state !== 'running' || !gameStarted || pausedForQuiz) return
+  songTimer -= dt
+  if (songTimer <= 0) {
+    const notes = [392, 440, 494, 587, 494, 440]
+    playTone(notes[Math.floor(clock.elapsedTime * 1.4) % notes.length], 0.28, 0.018)
+    songTimer = 0.58
+  }
+}
+
+applyCharacterChoice('girl')
+
 playAgainButton.addEventListener('click', () => {
   knowledgeOrbs.forEach((orb) => { orb.collected = false; orb.mesh.visible = true })
   score = 0
@@ -613,10 +928,10 @@ playAgainButton.addEventListener('click', () => {
 function animate() {
   const dt = Math.min(clock.getDelta(), 0.033)
   updateVehicle(dt)
+  updateAmbientSong(dt)
   knowledgeOrbs.forEach((orb, index) => {
     if (orb.collected) return
-    orb.mesh.rotation.y += dt * 1.6
-    orb.mesh.rotation.x += dt * 0.7
+    orb.mesh.rotation.y += dt * 0.8
     const pulse = 1 + Math.sin(clock.elapsedTime * 4 + index) * 0.08
     orb.mesh.scale.setScalar(pulse)
     orb.mesh.position.y = 1.1 + Math.sin(clock.elapsedTime * 2 + index) * 0.18
