@@ -18,50 +18,68 @@
       "source_file": "src/main.ts",
       "source_location": "L1",
       "id": "src_main_ts",
-      "community": 0,
+      "community": 2,
       "norm_label": "main.ts"
     },
     {
       "label": "createCanvasTexture()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L51",
+      "source_location": "L52",
       "id": "src_main_createcanvastexture",
-      "community": 0,
+      "community": 2,
       "norm_label": "createcanvastexture()"
     },
     {
       "label": "repeated()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L65",
+      "source_location": "L66",
       "id": "src_main_repeated",
-      "community": 2,
+      "community": 4,
       "norm_label": "repeated()"
     },
     {
       "label": "applyCharacterChoice()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L282",
+      "source_location": "L283",
       "id": "src_main_applycharacterchoice",
-      "community": 0,
+      "community": 2,
       "norm_label": "applycharacterchoice()"
     },
     {
-      "label": "addCollider()",
+      "label": "addCircleCollider()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L300",
-      "id": "src_main_addcollider",
+      "source_location": "L301",
+      "id": "src_main_addcirclecollider",
       "community": 3,
-      "norm_label": "addcollider()"
+      "norm_label": "addcirclecollider()"
+    },
+    {
+      "label": "addBoxCollider()",
+      "file_type": "code",
+      "source_file": "src/main.ts",
+      "source_location": "L305",
+      "id": "src_main_addboxcollider",
+      "community": 1,
+      "norm_label": "addboxcollider()"
+    },
+    {
+      "label": "addBoundaryCollider()",
+      "file_type": "code",
+      "source_file": "src/main.ts",
+      "source_location": "L309",
+      "id": "src_main_addboundarycollider",
+      "community": 2,
+      "norm_label": "addboundarycollider()"
     },
     {
       "label": "addLowPolyTree()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L304",
+      "source_location": "L313",
       "id": "src_main_addlowpolytree",
       "community": 3,
       "norm_label": "addlowpolytree()"
@@ -70,16 +88,16 @@
       "label": "makeLabelSprite()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L323",
+      "source_location": "L332",
       "id": "src_main_makelabelsprite",
-      "community": 6,
+      "community": 4,
       "norm_label": "makelabelsprite()"
     },
     {
       "label": "addRamp()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L346",
+      "source_location": "L355",
       "id": "src_main_addramp",
       "community": 3,
       "norm_label": "addramp()"
@@ -88,16 +106,16 @@
       "label": "burstAt()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L362",
+      "source_location": "L371",
       "id": "src_main_burstat",
-      "community": 4,
+      "community": 5,
       "norm_label": "burstat()"
     },
     {
       "label": "addFenceLine()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L380",
+      "source_location": "L389",
       "id": "src_main_addfenceline",
       "community": 1,
       "norm_label": "addfenceline()"
@@ -106,16 +124,16 @@
       "label": "addArchGate()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L395",
+      "source_location": "L404",
       "id": "src_main_addarchgate",
-      "community": 2,
+      "community": 3,
       "norm_label": "addarchgate()"
     },
     {
       "label": "addLantern()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L414",
+      "source_location": "L423",
       "id": "src_main_addlantern",
       "community": 1,
       "norm_label": "addlantern()"
@@ -124,7 +142,7 @@
       "label": "addBookStack()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L424",
+      "source_location": "L433",
       "id": "src_main_addbookstack",
       "community": 1,
       "norm_label": "addbookstack()"
@@ -133,7 +151,7 @@
       "label": "addPlanter()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L435",
+      "source_location": "L444",
       "id": "src_main_addplanter",
       "community": 3,
       "norm_label": "addplanter()"
@@ -142,43 +160,43 @@
       "label": "addFountain()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L446",
+      "source_location": "L455",
       "id": "src_main_addfountain",
-      "community": 1,
+      "community": 3,
       "norm_label": "addfountain()"
     },
     {
       "label": "addSmallHouse()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L458",
+      "source_location": "L467",
       "id": "src_main_addsmallhouse",
-      "community": 3,
+      "community": 4,
       "norm_label": "addsmallhouse()"
     },
     {
       "label": "addBench()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L473",
+      "source_location": "L482",
       "id": "src_main_addbench",
-      "community": 2,
+      "community": 1,
       "norm_label": "addbench()"
     },
     {
       "label": "addSignpost()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L494",
+      "source_location": "L503",
       "id": "src_main_addsignpost",
-      "community": 6,
+      "community": 4,
       "norm_label": "addsignpost()"
     },
     {
       "label": "addFlowerBed()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L511",
+      "source_location": "L520",
       "id": "src_main_addflowerbed",
       "community": 3,
       "norm_label": "addflowerbed()"
@@ -187,52 +205,52 @@
       "label": "addChalkboard()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L530",
+      "source_location": "L539",
       "id": "src_main_addchalkboard",
-      "community": 2,
+      "community": 1,
       "norm_label": "addchalkboard()"
     },
     {
       "label": "addMarketStall()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L549",
+      "source_location": "L558",
       "id": "src_main_addmarketstall",
-      "community": 2,
+      "community": 1,
       "norm_label": "addmarketstall()"
     },
     {
       "label": "addDonationBox()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L574",
+      "source_location": "L583",
       "id": "src_main_adddonationbox",
-      "community": 3,
+      "community": 1,
       "norm_label": "adddonationbox()"
     },
     {
       "label": "addWaterStand()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L587",
+      "source_location": "L596",
       "id": "src_main_addwaterstand",
-      "community": 1,
+      "community": 3,
       "norm_label": "addwaterstand()"
     },
     {
       "label": "addSandalRack()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L600",
+      "source_location": "L609",
       "id": "src_main_addsandalrack",
-      "community": 2,
+      "community": 1,
       "norm_label": "addsandalrack()"
     },
     {
       "label": "addBroom()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L617",
+      "source_location": "L626",
       "id": "src_main_addbroom",
       "community": 1,
       "norm_label": "addbroom()"
@@ -241,16 +259,16 @@
       "label": "addSoftPath()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L632",
+      "source_location": "L641",
       "id": "src_main_addsoftpath",
-      "community": 2,
+      "community": 4,
       "norm_label": "addsoftpath()"
     },
     {
       "label": "addZoneGroundPatch()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L643",
+      "source_location": "L652",
       "id": "src_main_addzonegroundpatch",
       "community": 1,
       "norm_label": "addzonegroundpatch()"
@@ -259,7 +277,7 @@
       "label": "addZoneSetDressing()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L653",
+      "source_location": "L662",
       "id": "src_main_addzonesetdressing",
       "community": 1,
       "norm_label": "addzonesetdressing()"
@@ -268,63 +286,63 @@
       "label": "addBuilding()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L686",
+      "source_location": "L695",
       "id": "src_main_addbuilding",
-      "community": 6,
+      "community": 4,
       "norm_label": "addbuilding()"
     },
     {
       "label": "createQuestScene()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L719",
+      "source_location": "L728",
       "id": "src_main_createquestscene",
-      "community": 6,
+      "community": 4,
       "norm_label": "createquestscene()"
     },
     {
       "label": "setJoystickFromPointer()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L820",
+      "source_location": "L831",
       "id": "src_main_setjoystickfrompointer",
-      "community": 0,
+      "community": 2,
       "norm_label": "setjoystickfrompointer()"
     },
     {
       "label": "releaseJoystick()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L840",
+      "source_location": "L851",
       "id": "src_main_releasejoystick",
-      "community": 0,
+      "community": 2,
       "norm_label": "releasejoystick()"
     },
     {
       "label": "resetCar()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L854",
+      "source_location": "L865",
       "id": "src_main_resetcar",
-      "community": 0,
+      "community": 2,
       "norm_label": "resetcar()"
     },
     {
       "label": "resize()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L864",
+      "source_location": "L875",
       "id": "src_main_resize",
-      "community": 0,
+      "community": 2,
       "norm_label": "resize()"
     },
     {
       "label": "updateVehicle()",
       "file_type": "code",
       "source_file": "src/main.ts",
-      "source_location": "L870",
+      "source_location": "L881",
       "id": "src_main_updatevehicle",
-      "community": 5,
+      "community": 6,
       "norm_label": "updatevehicle()"
     },
     {
@@ -333,7 +351,7 @@
       "source_file": "src/main.ts",
       "source_location": "L922",
       "id": "src_main_updatecamera",
-      "community": 5,
+      "community": 6,
       "norm_label": "updatecamera()"
     },
     {
@@ -342,7 +360,7 @@
       "source_file": "src/main.ts",
       "source_location": "L930",
       "id": "src_main_checkorbs",
-      "community": 5,
+      "community": 6,
       "norm_label": "checkorbs()"
     },
     {
@@ -351,7 +369,7 @@
       "source_file": "src/main.ts",
       "source_location": "L938",
       "id": "src_main_openquiz",
-      "community": 0,
+      "community": 2,
       "norm_label": "openquiz()"
     },
     {
@@ -360,7 +378,7 @@
       "source_file": "src/main.ts",
       "source_location": "L960",
       "id": "src_main_answerquiz",
-      "community": 4,
+      "community": 5,
       "norm_label": "answerquiz()"
     },
     {
@@ -369,7 +387,7 @@
       "source_file": "src/main.ts",
       "source_location": "L1015",
       "id": "src_main_initaudio",
-      "community": 0,
+      "community": 2,
       "norm_label": "initaudio()"
     },
     {
@@ -378,7 +396,7 @@
       "source_file": "src/main.ts",
       "source_location": "L1029",
       "id": "src_main_playtone",
-      "community": 4,
+      "community": 5,
       "norm_label": "playtone()"
     },
     {
@@ -387,7 +405,7 @@
       "source_file": "src/main.ts",
       "source_location": "L1043",
       "id": "src_main_playpickupsound",
-      "community": 4,
+      "community": 5,
       "norm_label": "playpickupsound()"
     },
     {
@@ -396,7 +414,7 @@
       "source_file": "src/main.ts",
       "source_location": "L1048",
       "id": "src_main_updateambientsong",
-      "community": 4,
+      "community": 5,
       "norm_label": "updateambientsong()"
     },
     {
@@ -405,7 +423,7 @@
       "source_file": "src/main.ts",
       "source_location": "L1073",
       "id": "src_main_animate",
-      "community": 5,
+      "community": 6,
       "norm_label": "animate()"
     },
     {
@@ -463,6 +481,168 @@
       "norm_label": "getuielements()"
     },
     {
+      "label": "CollisionSystem.ts",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L1",
+      "id": "src_systems_collisionsystem_ts",
+      "community": 0,
+      "norm_label": "collisionsystem.ts"
+    },
+    {
+      "label": "isCircle()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L31",
+      "id": "systems_collisionsystem_iscircle",
+      "community": 0,
+      "norm_label": "iscircle()"
+    },
+    {
+      "label": "isBox()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L32",
+      "id": "systems_collisionsystem_isbox",
+      "community": 0,
+      "norm_label": "isbox()"
+    },
+    {
+      "label": "isBoundary()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L33",
+      "id": "systems_collisionsystem_isboundary",
+      "community": 0,
+      "norm_label": "isboundary()"
+    },
+    {
+      "label": "CollisionSystem",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L35",
+      "id": "systems_collisionsystem_collisionsystem",
+      "community": 0,
+      "norm_label": "collisionsystem"
+    },
+    {
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L39",
+      "id": "systems_collisionsystem_collisionsystem_constructor",
+      "community": 0,
+      "norm_label": ".constructor()"
+    },
+    {
+      "label": ".setPlayerRadius()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L43",
+      "id": "systems_collisionsystem_collisionsystem_setplayerradius",
+      "community": 0,
+      "norm_label": ".setplayerradius()"
+    },
+    {
+      "label": ".add()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L47",
+      "id": "systems_collisionsystem_collisionsystem_add",
+      "community": 0,
+      "norm_label": ".add()"
+    },
+    {
+      "label": ".addCircle()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L51",
+      "id": "systems_collisionsystem_collisionsystem_addcircle",
+      "community": 0,
+      "norm_label": ".addcircle()"
+    },
+    {
+      "label": ".addBox()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L61",
+      "id": "systems_collisionsystem_collisionsystem_addbox",
+      "community": 0,
+      "norm_label": ".addbox()"
+    },
+    {
+      "label": ".addBoundary()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L71",
+      "id": "systems_collisionsystem_collisionsystem_addboundary",
+      "community": 0,
+      "norm_label": ".addboundary()"
+    },
+    {
+      "label": ".clear()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L81",
+      "id": "systems_collisionsystem_collisionsystem_clear",
+      "community": 0,
+      "norm_label": ".clear()"
+    },
+    {
+      "label": ".getAll()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L85",
+      "id": "systems_collisionsystem_collisionsystem_getall",
+      "community": 0,
+      "norm_label": ".getall()"
+    },
+    {
+      "label": ".getByLabel()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L89",
+      "id": "systems_collisionsystem_collisionsystem_getbylabel",
+      "community": 0,
+      "norm_label": ".getbylabel()"
+    },
+    {
+      "label": ".removeByLabel()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L93",
+      "id": "systems_collisionsystem_collisionsystem_removebylabel",
+      "community": 0,
+      "norm_label": ".removebylabel()"
+    },
+    {
+      "label": ".checkCollision()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L102",
+      "id": "systems_collisionsystem_collisionsystem_checkcollision",
+      "community": 0,
+      "norm_label": ".checkcollision()"
+    },
+    {
+      "label": ".resolveCollisions()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L130",
+      "id": "systems_collisionsystem_collisionsystem_resolvecollisions",
+      "community": 0,
+      "norm_label": ".resolvecollisions()"
+    },
+    {
+      "label": ".debugDraw()",
+      "file_type": "code",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L198",
+      "id": "systems_collisionsystem_collisionsystem_debugdraw",
+      "community": 0,
+      "norm_label": ".debugdraw()"
+    },
+    {
       "label": "zones.ts",
       "file_type": "code",
       "source_file": "src/scene/zones.ts",
@@ -470,6 +650,15 @@
       "id": "src_scene_zones_ts",
       "community": 11,
       "norm_label": "zones.ts"
+    },
+    {
+      "label": "addCollider()",
+      "file_type": "code",
+      "source_file": "src/main.ts",
+      "source_location": "L300",
+      "community": 3,
+      "norm_label": "addcollider()",
+      "id": "src_main_addcollider"
     }
   ],
   "links": [
@@ -480,9 +669,9 @@
       "source_file": "src/main.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_main_ts",
-      "target": "ui_dom_mountapp",
-      "confidence_score": 1.0
+      "target": "ui_dom_mountapp"
     },
     {
       "relation": "imports",
@@ -491,8 +680,19 @@
       "source_file": "src/main.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_main_ts",
-      "target": "ui_dom_getuielements",
+      "target": "ui_dom_getuielements"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_main_ts",
+      "target": "systems_collisionsystem_collisionsystem",
       "confidence_score": 1.0
     },
     {
@@ -529,11 +729,31 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/main.ts",
-      "source_location": "L395",
+      "source_location": "L301",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "src_main_ts",
-      "target": "src_main_addcollider"
+      "target": "src_main_addcirclecollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L305",
+      "weight": 1.0,
+      "source": "src_main_ts",
+      "target": "src_main_addboxcollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L309",
+      "weight": 1.0,
+      "source": "src_main_ts",
+      "target": "src_main_addboundarycollider",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -926,6 +1146,16 @@
       "target": "src_main_animate"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L395",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_ts",
+      "target": "src_main_addcollider"
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -1051,164 +1281,175 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/main.ts",
+      "source_location": "L321",
+      "weight": 1.0,
+      "source": "src_main_addlowpolytree",
+      "target": "src_main_addcirclecollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L365",
+      "weight": 1.0,
+      "source": "src_main_addramp",
+      "target": "src_main_addcirclecollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L420",
+      "weight": 1.0,
+      "source": "src_main_addarchgate",
+      "target": "src_main_addcirclecollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L452",
+      "weight": 1.0,
+      "source": "src_main_addplanter",
+      "target": "src_main_addcirclecollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L464",
+      "weight": 1.0,
+      "source": "src_main_addfountain",
+      "target": "src_main_addcirclecollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L517",
+      "weight": 1.0,
+      "source": "src_main_addsignpost",
+      "target": "src_main_addcirclecollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L536",
+      "weight": 1.0,
+      "source": "src_main_addflowerbed",
+      "target": "src_main_addcirclecollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L606",
+      "weight": 1.0,
+      "source": "src_main_addwaterstand",
+      "target": "src_main_addcirclecollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L478",
+      "weight": 1.0,
+      "source": "src_main_addsmallhouse",
+      "target": "src_main_addboxcollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L500",
+      "weight": 1.0,
+      "source": "src_main_addbench",
+      "target": "src_main_addboxcollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L555",
+      "weight": 1.0,
+      "source": "src_main_addchalkboard",
+      "target": "src_main_addboxcollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L580",
+      "weight": 1.0,
+      "source": "src_main_addmarketstall",
+      "target": "src_main_addboxcollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L593",
+      "weight": 1.0,
+      "source": "src_main_adddonationbox",
+      "target": "src_main_addboxcollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L623",
+      "weight": 1.0,
+      "source": "src_main_addsandalrack",
+      "target": "src_main_addboxcollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L724",
+      "weight": 1.0,
+      "source": "src_main_addbuilding",
+      "target": "src_main_addboxcollider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
       "source_location": "L407",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_main_addlowpolytree",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L451",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addramp",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L506",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addarchgate",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L538",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addplanter",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L550",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addfountain",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L564",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addsmallhouse",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L586",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addbench",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L603",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addsignpost",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L622",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addflowerbed",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L641",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addchalkboard",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L666",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addmarketstall",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L679",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_adddonationbox",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L692",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addwaterstand",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L709",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addsandalrack",
-      "target": "src_main_addcollider"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/main.ts",
-      "source_location": "L810",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_main_addbuilding",
       "target": "src_main_addcollider"
     },
     {
@@ -1249,6 +1490,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/main.ts",
+      "source_location": "L451",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addramp",
+      "target": "src_main_addcollider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
       "source_location": "L1062",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -1282,6 +1534,17 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/main.ts",
+      "source_location": "L506",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addarchgate",
+      "target": "src_main_addcollider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
       "source_location": "L751",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -1304,11 +1567,44 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/main.ts",
+      "source_location": "L538",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addplanter",
+      "target": "src_main_addcollider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
       "source_location": "L755",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_main_addzonesetdressing",
       "target": "src_main_addfountain"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L550",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addfountain",
+      "target": "src_main_addcollider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L564",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addsmallhouse",
+      "target": "src_main_addcollider"
     },
     {
       "relation": "calls",
@@ -1326,11 +1622,33 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/main.ts",
+      "source_location": "L586",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addbench",
+      "target": "src_main_addcollider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
       "source_location": "L753",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_main_addzonesetdressing",
       "target": "src_main_addsignpost"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L603",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addsignpost",
+      "target": "src_main_addcollider"
     },
     {
       "relation": "calls",
@@ -1348,11 +1666,33 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/main.ts",
+      "source_location": "L622",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addflowerbed",
+      "target": "src_main_addcollider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
       "source_location": "L767",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_main_addzonesetdressing",
       "target": "src_main_addchalkboard"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L641",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addchalkboard",
+      "target": "src_main_addcollider"
     },
     {
       "relation": "calls",
@@ -1370,11 +1710,33 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/main.ts",
+      "source_location": "L666",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addmarketstall",
+      "target": "src_main_addcollider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
       "source_location": "L775",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_main_addzonesetdressing",
       "target": "src_main_adddonationbox"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L679",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_adddonationbox",
+      "target": "src_main_addcollider"
     },
     {
       "relation": "calls",
@@ -1392,11 +1754,33 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/main.ts",
+      "source_location": "L692",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addwaterstand",
+      "target": "src_main_addcollider"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
       "source_location": "L758",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_main_addzonesetdressing",
       "target": "src_main_addsandalrack"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L709",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addsandalrack",
+      "target": "src_main_addcollider"
     },
     {
       "relation": "calls",
@@ -1419,6 +1803,17 @@
       "confidence_score": 1.0,
       "source": "src_main_addzonesetdressing",
       "target": "src_main_addzonegroundpatch"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/main.ts",
+      "source_location": "L810",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_main_addbuilding",
+      "target": "src_main_addcollider"
     },
     {
       "relation": "calls",
@@ -1513,9 +1908,9 @@
       "source_file": "src/ui/dom.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_ui_dom_ts",
-      "target": "ui_dom_mountapp",
-      "confidence_score": 1.0
+      "target": "ui_dom_mountapp"
     },
     {
       "relation": "contains",
@@ -1523,8 +1918,288 @@
       "source_file": "src/ui/dom.ts",
       "source_location": "L82",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_ui_dom_ts",
-      "target": "ui_dom_getuielements",
+      "target": "ui_dom_getuielements"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "src_systems_collisionsystem_ts",
+      "target": "systems_collisionsystem_iscircle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "src_systems_collisionsystem_ts",
+      "target": "systems_collisionsystem_isbox",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "src_systems_collisionsystem_ts",
+      "target": "systems_collisionsystem_isboundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "src_systems_collisionsystem_ts",
+      "target": "systems_collisionsystem_collisionsystem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_checkcollision",
+      "target": "systems_collisionsystem_iscircle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L139",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_resolvecollisions",
+      "target": "systems_collisionsystem_iscircle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L205",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_debugdraw",
+      "target": "systems_collisionsystem_iscircle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_checkcollision",
+      "target": "systems_collisionsystem_isbox",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L151",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_resolvecollisions",
+      "target": "systems_collisionsystem_isbox",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L211",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_debugdraw",
+      "target": "systems_collisionsystem_isbox",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L116",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_checkcollision",
+      "target": "systems_collisionsystem_isboundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_resolvecollisions",
+      "target": "systems_collisionsystem_isboundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L216",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_debugdraw",
+      "target": "systems_collisionsystem_isboundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_constructor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_setplayerradius",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_add",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_addcircle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_addbox",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L71",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_addboundary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_clear",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L85",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_getall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_getbylabel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_removebylabel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_checkcollision",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L130",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_resolvecollisions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L198",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem",
+      "target": "systems_collisionsystem_collisionsystem_debugdraw",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/systems/CollisionSystem.ts",
+      "source_location": "L210",
+      "weight": 1.0,
+      "source": "systems_collisionsystem_collisionsystem_debugdraw",
+      "target": "systems_collisionsystem_collisionsystem_add",
       "confidence_score": 1.0
     }
   ],

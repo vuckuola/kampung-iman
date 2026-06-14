@@ -4,8 +4,8 @@
     "hash": "195a0bdc6a00cf5fbef276879eff8d7c"
   },
   "/home/adm-herm/kampung-iman-webgl/src/main.ts": {
-    "mtime": 1781391116.8701062,
-    "hash": "448a99700b9e362d68a8e2ed1609fb12"
+    "mtime": 1781396443.0408494,
+    "hash": "4e9930711fb8cd5d7c228d7743a63119"
   },
   "/home/adm-herm/kampung-iman-webgl/src/counter.ts": {
     "mtime": 1781352900.8184562,
@@ -18,6 +18,10 @@
   "/home/adm-herm/kampung-iman-webgl/src/ui/dom.ts": {
     "mtime": 1781391116.8701062,
     "hash": "8822e9d7fd4b75e3ed004344740be325"
+  },
+  "/home/adm-herm/kampung-iman-webgl/src/systems/CollisionSystem.ts": {
+    "mtime": 1781426815.0037441,
+    "hash": "927b7eccfe29aa8c31d5de5b53156184"
   },
   "/home/adm-herm/kampung-iman-webgl/src/scene/zones.ts": {
     "mtime": 1781391116.8701062,

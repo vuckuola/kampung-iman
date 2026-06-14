@@ -3,6 +3,7 @@ import './style.css'
 import { quizzes, type Quiz, type ZoneId } from './content/lessons'
 import { mountApp, getUIElements } from './ui/dom'
 import { zones } from './scene/zones'
+import { CollisionSystem } from './systems/CollisionSystem'
 
 type KnowledgeOrb = {
   mesh: THREE.Object3D
@@ -295,10 +296,18 @@ function applyCharacterChoice(choice: CharacterChoice) {
   }
 }
 
-type Collider = { center: THREE.Vector3; radius: number; label: string }
-const colliders: Collider[] = []
-function addCollider(center: THREE.Vector3, radius: number, label: string) {
-  colliders.push({ center: center.clone(), radius, label })
+const collisionSystem = new CollisionSystem(0.72)
+
+function addCircleCollider(center: THREE.Vector3, radius: number, label: string) {
+  collisionSystem.addCircle(center, radius, label)
+}
+
+function addBoxCollider(center: THREE.Vector3, halfExtents: THREE.Vector3, label: string) {
+  collisionSystem.addBox(center, halfExtents, label)
+}
+
+function addBoundaryCollider(center: THREE.Vector3, halfExtents: THREE.Vector3, label: string) {
+  collisionSystem.addBoundary(center, halfExtents, label)
 }
 
 function addLowPolyTree(x: number, z: number, scale = 1) {
@@ -309,7 +318,7 @@ function addLowPolyTree(x: number, z: number, scale = 1) {
   trunk.position.set(x, 0.6 * scale, z)
   trunk.castShadow = true
   scene.add(trunk)
-  addCollider(new THREE.Vector3(x, 0, z), 0.62 * scale, 'tree')
+  addCircleCollider(new THREE.Vector3(x, 0, z), 0.62 * scale, 'tree')
   const leaves = new THREE.Mesh(
     new THREE.ConeGeometry(0.9 * scale, 1.7 * scale, 6),
     new THREE.MeshStandardMaterial({ color: 0x2f8f46, map: repeated(leafTexture, 1, 1), roughness: 0.84 }),
@@ -353,7 +362,7 @@ function addRamp(x: number, z: number, rotation = 0) {
   ramp.castShadow = true
   ramp.receiveShadow = true
   scene.add(ramp)
-  addCollider(new THREE.Vector3(x, 0, z), 2.5, 'ramp')
+  addCircleCollider(new THREE.Vector3(x, 0, z), 2.5, 'ramp')
 }
 
 type PickupParticle = { mesh: THREE.Mesh; velocity: THREE.Vector3; life: number; maxLife: number }
@@ -408,7 +417,7 @@ function addArchGate(x: number, z: number, color: number, rotation = 0) {
   group.rotation.y = rotation
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
-  addCollider(new THREE.Vector3(x, 0, z), 1.7, 'arch gate')
+  addCircleCollider(new THREE.Vector3(x, 0, z), 1.7, 'arch gate')
 }
 
 function addLantern(x: number, z: number, color = 0xffd166) {
@@ -440,7 +449,7 @@ function addPlanter(x: number, z: number) {
   box.castShadow = true
   sprout.castShadow = true
   scene.add(box, sprout)
-  addCollider(new THREE.Vector3(x, 0, z), 0.85, 'planter')
+  addCircleCollider(new THREE.Vector3(x, 0, z), 0.85, 'planter')
 }
 
 function addFountain(x: number, z: number) {
@@ -452,7 +461,7 @@ function addFountain(x: number, z: number) {
   jet.position.set(x, 1.0, z)
   basin.castShadow = true
   scene.add(basin, water, jet)
-  addCollider(new THREE.Vector3(x, 0, z), 1.35, 'fountain')
+  addCircleCollider(new THREE.Vector3(x, 0, z), 1.35, 'fountain')
 }
 
 function addSmallHouse(x: number, z: number, color: number) {
@@ -466,7 +475,7 @@ function addSmallHouse(x: number, z: number, color: number) {
   group.position.set(x, 0, z)
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
-  addCollider(new THREE.Vector3(x, 0, z), 1.9, 'house')
+  addBoxCollider(new THREE.Vector3(x, 0, z), new THREE.Vector3(1.2, 0, 1.0), 'house')
 }
 
 
@@ -488,7 +497,7 @@ function addBench(x: number, z: number, rotation = 0) {
   group.rotation.y = rotation
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
-  addCollider(new THREE.Vector3(x, 0, z), 0.9, 'bench')
+  addBoxCollider(new THREE.Vector3(x, 0, z), new THREE.Vector3(0.78, 0, 0.21), 'bench')
 }
 
 function addSignpost(x: number, z: number, text: string, color: number, rotation = 0) {
@@ -505,7 +514,7 @@ function addSignpost(x: number, z: number, text: string, color: number, rotation
   group.rotation.y = rotation
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
-  addCollider(new THREE.Vector3(x, 0, z), 0.42, 'signpost')
+  addCircleCollider(new THREE.Vector3(x, 0, z), 0.42, 'signpost')
 }
 
 function addFlowerBed(x: number, z: number, color = 0xffd166) {
@@ -524,7 +533,7 @@ function addFlowerBed(x: number, z: number, color = 0xffd166) {
   group.position.set(x, 0, z)
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
-  addCollider(new THREE.Vector3(x, 0, z), 0.85, 'flower bed')
+  addCircleCollider(new THREE.Vector3(x, 0, z), 0.85, 'flower bed')
 }
 
 function addChalkboard(x: number, z: number, rotation = 0) {
@@ -543,7 +552,7 @@ function addChalkboard(x: number, z: number, rotation = 0) {
   group.rotation.y = rotation
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
-  addCollider(new THREE.Vector3(x, 0, z), 1.05, 'chalkboard')
+  addBoxCollider(new THREE.Vector3(x, 0, z), new THREE.Vector3(0.95, 0, 0.06), 'chalkboard')
 }
 
 function addMarketStall(x: number, z: number, rotation = 0) {
@@ -568,7 +577,7 @@ function addMarketStall(x: number, z: number, rotation = 0) {
   group.rotation.y = rotation
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
-  addCollider(new THREE.Vector3(x, 0, z), 1.35, 'market stall')
+  addBoxCollider(new THREE.Vector3(x, 0, z), new THREE.Vector3(1.28, 0, 0.64), 'market stall')
 }
 
 function addDonationBox(x: number, z: number) {
@@ -581,7 +590,7 @@ function addDonationBox(x: number, z: number) {
   group.position.set(x, 0, z)
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
-  addCollider(new THREE.Vector3(x, 0, z), 0.72, 'donation box')
+  addBoxCollider(new THREE.Vector3(x, 0, z), new THREE.Vector3(0.5, 0, 0.35), 'donation box')
 }
 
 function addWaterStand(x: number, z: number) {
@@ -594,7 +603,7 @@ function addWaterStand(x: number, z: number) {
   stand.position.set(x, 0, z)
   stand.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(stand)
-  addCollider(new THREE.Vector3(x, 0, z), 0.58, 'water stand')
+  addCircleCollider(new THREE.Vector3(x, 0, z), 0.58, 'water stand')
 }
 
 function addSandalRack(x: number, z: number, rotation = 0) {
@@ -611,7 +620,7 @@ function addSandalRack(x: number, z: number, rotation = 0) {
   group.rotation.y = rotation
   group.traverse((obj) => { if (obj instanceof THREE.Mesh) obj.castShadow = true })
   scene.add(group)
-  addCollider(new THREE.Vector3(x, 0, z), 0.72, 'sandal rack')
+  addBoxCollider(new THREE.Vector3(x, 0, z), new THREE.Vector3(0.65, 0, 0.24), 'sandal rack')
 }
 
 function addBroom(x: number, z: number, rotation = 0) {
@@ -712,7 +721,7 @@ function addBuilding(position: THREE.Vector3, color: number, label: string) {
   group.position.copy(position)
   group.userData.label = label
   scene.add(group)
-  addCollider(position, 4.05, label)
+  addBoxCollider(position, new THREE.Vector3(2.7, 0, 2.3), label)
 }
 
 
@@ -790,6 +799,8 @@ addBench(-3.8, -9.4, 0.35)
 addBench(4.1, -9.2, -0.35)
 addFlowerBed(-6.6, -8.6, 0xf2a0b8)
 addFlowerBed(6.8, -8.4, 0xffd166)
+
+addBoundaryCollider(new THREE.Vector3(0, 0, 0), new THREE.Vector3(31, 0, 31), 'world boundary')
 
 for (let i = 0; i < 42; i += 1) {
   const x = (Math.random() - 0.5) * 62
@@ -895,20 +906,9 @@ function updateVehicle(dt: number) {
 
   const direction = new THREE.Vector3(Math.sin(car.rotation.y), 0, Math.cos(car.rotation.y))
   car.position.addScaledVector(direction, speed * dt)
-  colliders.forEach((collider) => {
-    const dx = car.position.x - collider.center.x
-    const dz = car.position.z - collider.center.z
-    const distance = Math.hypot(dx, dz) || 0.0001
-    const minDistance = collider.radius + 0.72
-    if (distance < minDistance) {
-      const push = (minDistance - distance)
-      car.position.x += (dx / distance) * push
-      car.position.z += (dz / distance) * push
-      speed *= 0.35
-    }
-  })
-  car.position.x = THREE.MathUtils.clamp(car.position.x, -31, 31)
-  car.position.z = THREE.MathUtils.clamp(car.position.z, -31, 31)
+  const resolved = collisionSystem.resolveCollisions(car.position, speed)
+  car.position.copy(resolved.position)
+  speed = resolved.speed
   leftLeg.rotation.x = Math.sin(clock.elapsedTime * 9) * Math.min(Math.abs(speed) / 16, 0.55)
   rightLeg.rotation.x = -leftLeg.rotation.x
   leftArm.rotation.x = -leftLeg.rotation.x * 0.55
